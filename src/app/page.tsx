@@ -3,24 +3,23 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Zap, Shield, TrendingUp, Clock, Users, Palette, ShoppingCart, DollarSign, Baby, PawPrint, MapPin, Phone, Building, Edit, Award, ChevronRight, HelpCircle } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Shield, TrendingUp, Clock, Users, ChevronRight, HelpCircle } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
-import { Hero3D } from "@/components/Hero3D";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { Footer } from "@/components/Footer";
 import { services, faqs, projects } from "@/lib/data";
 
 const iconMap: Record<string, typeof Sparkles> = {
   Baby: Sparkles,
-  Paw: PawPrint,
-  MapPin: MapPin,
-  Phone: Phone,
-  Palette: Palette,
-  Building: Building,
-  ShoppingCart: ShoppingCart,
-  DollarSign: DollarSign,
-  Edit: Edit,
-  Award: Award,
+  Paw: Sparkles,
+  MapPin: Sparkles,
+  Phone: Sparkles,
+  Palette: Sparkles,
+  Building: Sparkles,
+  ShoppingCart: Sparkles,
+  DollarSign: Sparkles,
+  Edit: Sparkles,
+  Award: Sparkles,
 };
 
 function Hero() {
@@ -28,12 +27,13 @@ function Hero() {
   const isInView = useInView(ref, { once: true });
 
   return (
-    <section ref={ref} className="min-h-screen relative overflow-hidden pt-20 pb-12">
-      <div className="absolute inset-0 z-0">
-        <Hero3D />
+    <section ref={ref} className="min-h-screen relative overflow-hidden pt-20 pb-12 bg-gradient-to-b from-background via-background to-secondary">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       </div>
       
-      <div className="max-w-7xl mx-auto relative z-10 px-3 sm:px-4 md:px-6 lg:px-8 h-full">
+      <div className="max-w-7xl mx-auto relative z-10 px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between h-full min-h-[80vh] gap-8">
           <div className="text-center lg:text-left flex-1 max-w-2xl">
             <motion.div
@@ -81,8 +81,6 @@ function Hero() {
               </Link>
             </motion.div>
           </div>
-
-          <div className="hidden lg:block w-[400px] h-[400px] flex-shrink-0" />
         </div>
       </div>
 
@@ -196,15 +194,22 @@ function FeaturedWork() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8">
           {projects.slice(0, 6).map((project, idx) => (
-            <motion.a key={project.id} href={project.url} target="_blank" initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: idx * 0.1 }} className="block group glass rounded-xl overflow-hidden hover:border-primary/50 transition-all">
-              <div className="h-32 bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
-                <Sparkles className="w-10 h-10 text-primary/30 group-hover:text-primary/60 transition-colors" />
-              </div>
-              <div className="p-4">
-                <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">{project.name}</h3>
-                <p className="text-xs text-muted capitalize">{project.category}</p>
-              </div>
-            </motion.a>
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: idx * 0.1 }}
+            >
+              <Link href={`/portfolio/${project.id}`} className="block group glass rounded-xl overflow-hidden hover:border-primary/50 transition-all">
+                <div className="h-32 bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
+                  <Sparkles className="w-10 h-10 text-primary/30 group-hover:text-primary/60 transition-colors" />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">{project.name}</h3>
+                  <p className="text-xs text-muted capitalize">{project.category}</p>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
 
