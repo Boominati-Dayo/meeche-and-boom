@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     const mailOptions = {
-      from: `"BOOMINATI Contact" <${process.env.SMTP_USER}>`,
+      from: `"Meeche & Boom Co." <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
       replyTo: email,
       subject: `New Contact Form Submission - ${name}`,
@@ -47,7 +47,8 @@ export async function POST(request: Request) {
         <body>
           <div class="container">
             <div class="header">
-              <h1>📩 New Contact Form Submission</h1>
+              <img src="https://meecheandboom.com/assets/Meeche&BoomCoLogo.png" alt="Meeche & Boom Co." style="height: 50px; margin-bottom: 10px;" />
+              <h1>New Contact Form Submission</h1>
             </div>
             <div class="content">
               <div class="field">
@@ -72,7 +73,7 @@ export async function POST(request: Request) {
               </div>
             </div>
             <div class="footer">
-              <p>This email was sent from the BOOMINATI contact form.</p>
+              <p>This email was sent from the Meeche & Boom Co. contact form.</p>
               <p>Sent at: ${new Date().toLocaleString()}</p>
             </div>
           </div>

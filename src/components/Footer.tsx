@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, Globe, Star, Send, Mail, Phone, MapPin } from "lucide-react";
+import { Globe, Star, Send, Mail, Phone, MapPin } from "lucide-react";
 
 const footerLinks = {
   services: [
-    { href: "/portfolio?category=silicone", label: "Silicone Baby Sites" },
-    { href: "/portfolio?category=pets", label: "Pet Sites" },
-    { href: "/portfolio?category=tracking", label: "Tracking Systems" },
-    { href: "/portfolio?category=ecommerce", label: "E-commerce" },
-    { href: "/portfolio?category=banking", label: "Banking" },
+    { href: "/services/silicone", label: "Silicone Baby Sites" },
+    { href: "/services/pets", label: "Pet Sites" },
+    { href: "/services/tracking", label: "Tracking Systems" },
+    { href: "/services/ecommerce", label: "E-commerce" },
+    { href: "/services/banking", label: "Banking" },
   ],
   company: [
     { href: "/about", label: "About Us" },
@@ -28,7 +28,7 @@ const socialLinks = [
   { icon: Globe, href: "#", label: "Website" },
   { icon: Star, href: "#", label: "Rating" },
   { icon: Send, href: "#", label: "Message" },
-  { icon: Mail, href: "mailto:hello@boominati.com", label: "Email" },
+  { icon: Mail, href: "mailto:hello@meecheandboom.com", label: "Email" },
 ];
 
 export function Footer() {
@@ -38,12 +38,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12">
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-              <Sparkles className="w-6 sm:w-7 md:w-8 h-6 sm:h-7 md:h-8 text-primary" />
-              <span className="text-lg sm:text-xl font-bold tracking-wider text-gradient">BOOMINATI</span>
+              <img src="/assets/Meeche&BoomCoLogo.png" alt="Meeche & Boom Co." className="h-8 sm:h-10 w-auto" />
             </Link>
             <p className="text-muted text-sm sm:mb-6 max-w-xs sm:max-w-sm mb-4 sm:mb-6">
-              Premium web development services for silicone baby websites, pet platforms, tracking systems, e-commerce, and more. 
-              Built with SEO best practices for maximum visibility.
+              We get clients, then build their sites. Expert digital solutions combining Meeche Brand marketing with Boominati development.
             </p>
             <div className="flex gap-2 sm:gap-3 md:gap-4">
               {socialLinks.map((social) => (
@@ -91,7 +89,7 @@ export function Footer() {
             <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-muted">
               <li className="flex items-center gap-1.5 sm:gap-2">
                 <Mail className="w-3 sm:w-4 h-3 sm:h-4 text-primary flex-shrink-0" />
-                <span className="truncate">hello@boominati.com</span>
+                <span className="truncate">hello@meecheandboom.com</span>
               </li>
               <li className="flex items-center gap-1.5 sm:gap-2">
                 <Phone className="w-3 sm:w-4 h-3 sm:h-4 text-primary flex-shrink-0" />
@@ -107,7 +105,7 @@ export function Footer() {
 
         <div className="border-t border-border mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
           <p className="text-xs sm:text-sm text-muted">
-            © {new Date().getFullYear()} BOOMINATI. All rights reserved.
+            © {new Date().getFullYear()} Meeche & Boom Co. All rights reserved.
           </p>
           <div className="flex gap-4 sm:gap-6 text-xs sm:text-sm text-muted">
             <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>

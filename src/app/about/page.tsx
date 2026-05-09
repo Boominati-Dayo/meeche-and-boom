@@ -35,10 +35,10 @@ export default function AboutPage() {
               <ArrowLeft className="w-4 h-4" /> Back to Home
             </Link>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              About <span className="text-gradient">BOOMINATI</span>
+              About <span className="text-gradient">Meeche & Boom Co.</span>
             </h1>
             <p className="text-xl text-muted max-w-2xl mx-auto">
-              Crafting premium digital experiences since 2020
+              Meeche Brand Marketing + Boominati Development = Results
             </p>
           </motion.div>
 
@@ -51,18 +51,13 @@ export default function AboutPage() {
             >
               <h2 className="text-2xl font-bold">Who I Am</h2>
               <p className="text-muted leading-relaxed">
-                BOOMINATI is a premium web development brand dedicated to crafting exceptional digital experiences. 
-                With years of experience in the industry, I specialize in creating stunning, functional websites that help 
-                businesses stand out in the digital landscape.
+                Meeche & Boom Co. is a powerful combination of Meeche Brand (marketing) and Boominati (development). 
+                We get clients first, then build their sites. Specializing in silicone baby websites, pet breeder platforms, 
+                tracking and logistics systems, e-commerce solutions, and banking platforms.
               </p>
               <p className="text-muted leading-relaxed">
-                My expertise spans across multiple industries including silicone baby websites, pet breeder platforms, 
-                tracking and logistics systems, e-commerce solutions, and banking platforms. Each project is approached 
-                with meticulous attention to detail and a focus on delivering results.
-              </p>
-              <p className="text-muted leading-relaxed">
-                What sets BOOMINATI apart is the commitment to quality, transparency, and client satisfaction. 
-                I believe in building long-term relationships with clients through exceptional service and results.
+                What sets us apart is the commitment to results, transparency, and client satisfaction. 
+                We believe in building long-term relationships with clients through exceptional service.
               </p>
             </motion.div>
             

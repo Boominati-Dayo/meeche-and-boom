@@ -2,40 +2,28 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-type Theme = "dark" | "light";
+type Theme = "dark";
 
 interface ThemeContextType {
   theme: Theme;
-  toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem("boominati-theme") as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
-    document.documentElement.classList.remove("dark", "light");
-    document.documentElement.classList.add(theme);
-    localStorage.setItem("boominati-theme", theme);
-  }, [theme, mounted]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === "dark" ? "light" : "dark");
-  };
+    document.documentElement.classList.add("dark");
+  }, [mounted]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme: "dark" as Theme }}>
       {children}
     </ThemeContext.Provider>
   );

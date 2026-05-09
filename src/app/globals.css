@@ -5,18 +5,6 @@
   --primary-light: #e8c547;
   --accent: #3d3d3d;
   --muted: #737373;
-}
-
-.light {
-  --background: #fafafa;
-  --foreground: #1a1a1a;
-  --secondary: #f0f0f0;
-  --border: #e0e0e0;
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(0, 0, 0, 0.08);
-}
-
-.dark {
   --background: #0a0a0a;
   --foreground: #fafafa;
   --secondary: #141414;
@@ -96,12 +84,12 @@ body {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
-.light .glass {
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+.glass {
+  box-shadow: 0 0 40px rgba(201, 162, 39, 0.2);
 }
 
-.glow {
-  box-shadow: 0 0 40px rgba(201, 162, 39, 0.2);
+.bg-gradient-radial {
+  background: radial-gradient(circle at center, transparent 0%, #0a0a0a 100%);
 }
 
 .text-gradient {
@@ -121,11 +109,11 @@ body {
   50% { box-shadow: 0 0 40px rgba(201, 162, 39, 0.6); }
 }
 
-.light details summary {
+details summary {
   list-style: none;
 }
 
-.light details summary::-webkit-details-marker {
+details summary::-webkit-details-marker {
   display: none;
 }
 

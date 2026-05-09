@@ -16,13 +16,13 @@ const keaniaOne = Keania_One({
 });
 
 export const metadata: Metadata = {
-  title: "BOOMINATI | Web Development & Digital Solutions",
-  description: "BOOMINATI - Expert web development services for silicone baby websites, pet platforms, tracking systems, e-commerce and custom digital solutions. Built for results.",
-  keywords: ["web development", "silicone baby websites", "pet breeder websites", "tracking systems", "e-commerce", "virtual numbers", "graphic design", "SEO", "website builder"],
-  authors: [{ name: "BOOMINATI" }],
+  title: "Meeche & Boom Co. | Digital Solutions - Marketing + Web Development",
+  description: "Meeche & Boom Co. - We get clients, then build their sites. Expert digital solutions combining marketing and web development.",
+  keywords: ["web development", "digital agency", "marketing", "silicone baby websites", "pet websites", "e-commerce", "SEO"],
+  authors: [{ name: "Meeche & Boom Co." }],
   openGraph: {
-    title: "BOOMINATI | Web Development & Digital Solutions",
-    description: "Expert web development services for silicone baby websites, pet platforms, tracking systems, e-commerce and custom digital solutions.",
+    title: "Meeche & Boom Co. | Digital Solutions",
+    description: "Marketing + Web Development - We get clients, then build their sites.",
     type: "website",
   },
 };
@@ -39,7 +39,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Meeche & Boom Co." />
+      </head>
       <body className={`${montserrat.variable} ${keaniaOne.variable} min-h-screen bg-background text-foreground antialiased transition-colors duration-300`}>
         <ThemeProvider>
           {children}

@@ -4,9 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sparkles, Search, Sun, Moon, ArrowRight } from "lucide-react";
+import { Menu, X, Search, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/data";
-import { useTheme } from "@/components/ThemeProvider";
 import { projects, services } from "@/lib/data";
 
 const navLinks = [
@@ -14,7 +13,6 @@ const navLinks = [
   { href: "/portfolio", label: "Portfolio" },
   { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/faq", label: "FAQ" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/contact", label: "Contact" },
 ];
@@ -26,7 +24,6 @@ export function Navbar() {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -62,7 +59,11 @@ export function Navbar() {
   const handleResultClick = (result: any) => {
     setSearchOpen(false);
     setSearchQuery("");
-    router.push('/portfolio');
+    if (result.type === 'service') {
+      router.push(`/services/${result.id}`);
+    } else {
+      router.push(`/portfolio/${result.id}`);
+    }
   };
 
   return (
@@ -74,8 +75,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12 sm:h-14 md:h-16">
           <Link href="/" className="flex items-center gap-1.5 sm:gap-2">
-            <Sparkles className="w-6 sm:w-7 md:w-8 h-6 sm:h-7 md:h-8 text-primary" />
-            <span className="text-lg sm:text-xl md:text-xl font-bold tracking-wider text-gradient">BOOMINATI</span>
+            <img src="/assets/Meeche&BoomCoLogo.png" alt="Meeche & Boom Co." className="h-8 sm:h-10 w-auto" />
           </Link>
 
           <div className="hidden md:flex items-center gap-5 lg:gap-8">
@@ -154,14 +154,20 @@ export function Navbar() {
                         <div className="py-3">
                           <p className="text-xs text-muted uppercase tracking-widest mb-3 px-1">Popular</p>
                           <div className="flex flex-wrap gap-2">
-                            {['Silicone', 'Pets', 'Tracking', 'E-commerce'].map((tag) => (
-                              <button
-                                key={tag}
-                                onClick={() => setSearchQuery(tag)}
+                            {[
+                              { label: 'Silicone', id: 'silicone' },
+                              { label: 'Pets', id: 'pets' },
+                              { label: 'Tracking', id: 'tracking' },
+                              { label: 'E-commerce', id: 'ecommerce' }
+                            ].map((item) => (
+                              <Link
+                                key={item.id}
+                                href={`/services/${item.id}`}
+                                onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
                                 className="px-3 py-1.5 bg-secondary hover:bg-primary/20 rounded-full text-xs font-medium text-muted transition-colors"
                               >
-                                {tag}
-                              </button>
+                                {item.label}
+                              </Link>
                             ))}
                           </div>
                         </div>
@@ -171,18 +177,6 @@ export function Navbar() {
                 )}
               </AnimatePresence>
             </div>
-
-            <button
-              onClick={toggleTheme}
-              className="p-1.5 sm:p-2 hover:bg-white/5 rounded-full transition-colors text-muted"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="w-4 sm:w-5 h-4 sm:h-5" />
-              ) : (
-                <Moon className="w-4 sm:w-5 h-4 sm:h-5" />
-              )}
-            </button>
 
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -215,12 +209,6 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <button
-                onClick={toggleTheme}
-                className="flex items-center gap-3 py-2 sm:py-2.5 text-sm sm:text-base font-medium text-muted hover:text-primary transition-colors w-full"
-              >
-                {theme === "dark" ? "Light Mode" : "Dark Mode"}
-              </button>
             </div>
           </motion.div>
         )}

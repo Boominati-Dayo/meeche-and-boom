@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import Link from "next/link";
 import { ArrowRight, Sparkles, Zap, Shield, TrendingUp, Clock, Users, ChevronRight, HelpCircle } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -23,52 +23,62 @@ const iconMap: Record<string, typeof Sparkles> = {
 };
 
 function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
+  const stars = useMemo(() => 
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      left: 5 + (i * 17) % 90,
+      top: 5 + (i * 23) % 90,
+      delay: i * 0.1,
+      duration: 2 + (i % 3),
+    })), []
+  );
 
   return (
-    <section ref={ref} className="min-h-screen relative overflow-hidden pt-20 pb-12 bg-gradient-to-b from-background via-background to-secondary">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+    <section className="min-h-screen relative overflow-hidden pt-20 pb-12">
+      <div className="absolute inset-0">
+        <div className="hidden lg:block absolute inset-0 bg-[url('/assets/home_hero.png')] bg-cover bg-right" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
       </div>
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        {stars.map((star) => (
+          <motion.div
+            key={star.id}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+              y: [0, -30, 0]
+            }}
+            transition={{
+              duration: star.duration,
+              repeat: Infinity,
+              delay: star.delay,
+              ease: "easeInOut"
+            }}
+            className="absolute w-1 h-1 sm:w-1.5 sm:h-1.5 bg-primary rounded-full"
+            style={{
+              left: `${star.left}%`,
+              top: `${star.top}%`,
+            }}
+          />
+        ))}
+      </div>
+        
       <div className="max-w-7xl mx-auto relative z-10 px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between h-full min-h-[80vh] gap-8">
-          <div className="text-center lg:text-left flex-1 max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass mb-6 sm:mb-8"
-            >
-              <Sparkles className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-primary" />
-              <span className="text-xs sm:text-sm text-muted">Web Development & Digital Solutions</span>
-            </motion.div>
-
-            <h1 className="text-2.5rem sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-[1.1]">
-              <span className="block">
-                <motion.span initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0, duration: 0.5 }} className="inline-block">
-                  Building
-                </motion.span>{" "}
-              </span>
-              <span className="block text-gradient">
-                <motion.span initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.2, duration: 0.5 }} className="inline-block">
-                  Digital
-                </motion.span>{" "}
-              </span>
-              <span className="block">
-                <motion.span initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.4, duration: 0.5 }} className="inline-block">
-                  Experiences
-                </motion.span>
-              </span>
+          <div className="text-center lg:text-left flex-1 max-w-2xl" style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+            <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-[1.1]">
+              <span className="block">Building</span>
+              <span className="block text-gradient">Digital</span>
+              <span className="block">Experiences</span>
             </h1>
-
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.6, duration: 0.5 }} className="text-base sm:text-lg md:text-xl text-muted max-w-xl mx-auto lg:mx-0 mb-8 sm:mb-10">
+            <p className="text-base sm:text-lg md:text-xl text-muted max-w-xl mx-auto lg:mx-0 mb-8 sm:mb-10">
               Specializing in silicone baby stores, pet platforms, tracking systems, e-commerce & custom web solutions. Built for businesses that want results.
-            </motion.p>
-
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.8, duration: 0.5 }} className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4">
+            </p>
+            <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4">
               <Link href="/portfolio">
                 <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors text-sm sm:text-base">
                   View Work <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
@@ -79,51 +89,37 @@ function Hero() {
                   Get In Touch
                 </motion.button>
               </Link>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
-
-      <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 1.5 }} className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2">
-        <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }} className="w-5 sm:w-6 h-8 sm:h-10 border-2 border-muted rounded-full flex justify-center pt-1.5 sm:pt-2">
-          <div className="w-0.5 sm:w-1 h-1.5 sm:h-2 bg-muted rounded-full" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
 
 function Stats() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-
-  const stats = [
-    { value: "18", label: "Projects" },
-    { value: "100%", label: "Satisfaction" },
-    { value: "48hrs", label: "Response" },
-    { value: "SEO Ready", label: "Optimized" },
-  ];
-
   return (
-    <section ref={ref} className="py-16 sm:py-20 md:py-24 bg-secondary/30">
+    <section className="py-16 sm:py-20 md:py-24 bg-secondary/30">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12">
-          {stats.map((stat, index) => (
-            <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: index * 0.1 }} className="text-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12">
+          {[
+            { value: "18", label: "Projects" },
+            { value: "100%", label: "Satisfaction" },
+            { value: "48hrs", label: "Response" },
+            { value: "SEO Ready", label: "Optimized" },
+          ].map((stat, index) => (
+            <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} className="text-center">
               <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-2">{stat.value}</p>
               <p className="text-sm sm:text-base text-muted">{stat.label}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
-  );
+);
 }
 
 function About() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-
   const benefits = [
     { icon: Clock, label: "Fast Delivery", value: "48hrs avg" },
     { icon: Shield, label: "Secure Code", value: "100% Secure" },
@@ -134,19 +130,19 @@ function About() {
   return (
     <section className="py-16 sm:py-20 md:py-24">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           <div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              About <span className="text-gradient">BOOMINATI</span>
+              About <span className="text-gradient">Meeche & Boom Co.</span>
             </h2>
             <p className="text-muted text-base sm:text-lg mb-4">
-              BOOMINATI is a digital web development brand focused on creating high-performance websites that drive real business results.
+              Meeche & Boom Co. combines the power of Meeche Brand marketing with Boominati web development.
             </p>
             <p className="text-muted text-base sm:text-lg mb-6">
-              Specializing in niche e-commerce platforms, logistics/tracking systems, and custom digital solutions. We're not just website builders - we're digital architects who transform businesses through strategic, conversion-optimized web experiences.
+              We get clients, then build their sites. Specializing in silicone baby websites, pet platforms, and custom digital solutions. We're not just developers - we build results.
             </p>
             <div className="grid grid-cols-2 gap-4 mb-6">
-              {benefits.map((item, idx) => (
+              {benefits.map((item: any, idx: number) => (
                 <div key={idx} className="flex items-center gap-3">
                   <item.icon className="w-5 h-5 text-primary" />
                   <div>
@@ -162,11 +158,11 @@ function About() {
           </div>
 
           <div className="relative order-first lg:order-last">
-            <div className="aspect-square max-w-md mx-auto glass rounded-2xl flex items-center justify-center p-8">
-              <div className="text-center">
-                <Sparkles className="w-16 h-16 mx-auto mb-4 text-primary" />
-                <h3 className="text-xl font-bold mb-2">BOOMINATI</h3>
-                <p className="text-muted text-sm">Building Digital Experiences</p>
+            <div className="aspect-square max-w-xs sm:max-w-sm md:max-w-md mx-auto lg:mx-0 relative -translate-x-2 translate-y-2 lg:-translate-x-4 lg:translate-y-4">
+              <div className="absolute inset-0 bg-secondary rounded-2xl skew-x-[-10deg] translate-x-2 translate-y-2" />
+              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-2xl -translate-x-1 -translate-y-1" />
+              <div className="relative glass rounded-2xl flex items-center justify-center p-1 sm:p-2 skew-x-[-10deg] overflow-hidden">
+                <img src="/assets/meeche_team.png" alt="Meeche & Boom Co." className="w-full h-full object-contain" />
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Filter, Search, Sparkles } from "lucide-react";
+import { ArrowLeft, ExternalLink, Filter, Search, Sparkles, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { projects } from "@/lib/data";
@@ -31,7 +31,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.05, duration: 0.5 }}
     >
-      <Link href={project.url} target="_blank">
+      <Link href={`/portfolio/${project.id}`}>
         <div className="group h-full glass rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:glow">
           <div className="relative h-48 bg-gradient-to-br from-secondary to-accent flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
@@ -56,7 +56,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
             <div className="flex items-center justify-between">
               <span className="text-primary font-medium">{project.price}</span>
               <div className="flex items-center gap-1 text-sm text-muted group-hover:text-primary transition-colors">
-                Visit <ExternalLink className="w-3 h-3" />
+                View Details
               </div>
             </div>
           </div>

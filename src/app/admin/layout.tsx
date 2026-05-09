@@ -60,8 +60,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-background">
       <nav className="fixed left-0 top-0 bottom-0 w-64 bg-secondary border-r border-border p-4 flex flex-col">
         <Link href="/" className="flex items-center gap-2 mb-8 px-2">
-          <Sparkles className="w-8 h-8 text-primary" />
-          <span className="text-xl font-bold text-gradient">BOOMINATI</span>
+          <img src="/assets/Meeche&BoomCoLogo.png" alt="Meeche & Boom Co." className="h-10 w-auto" />
         </Link>
         
         <div className="flex-1 space-y-1 overflow-y-auto">

@@ -18,14 +18,14 @@ function PricingCard({ pkg, index }: { pkg: typeof pricingPackages[0]; index: nu
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-      className={`relative ${pkg.popular ? 'lg:-mt-4' : ''}`}
+      className={`relative ${pkg.popular ? 'lg:-mt-4' : ''} z-0`}
     >
       {pkg.popular && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-background text-sm font-medium rounded-full">
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-background text-sm font-medium rounded-full z-50">
           Most Popular
         </div>
       )}
-      <div className={`h-full p-8 glass rounded-2xl ${pkg.popular ? 'border-primary glow' : ''}`}>
+      <div className={`h-full p-8 glass rounded-2xl ${pkg.popular ? 'border-primary glow' : ''} relative z-10`}>
         <h3 className="text-xl font-bold mb-2">{pkg.name}</h3>
         <p className="text-4xl font-bold text-gradient mb-2">{pkg.price}</p>
         <p className="text-muted text-sm mb-6">{pkg.description}</p>
