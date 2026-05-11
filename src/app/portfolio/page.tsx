@@ -48,7 +48,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div className="group h-full glass rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:glow">
           <div className="relative h-48 bg-gradient-to-br from-secondary to-accent flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
-            <Sparkles className="w-12 h-12 text-primary/30 group-hover:text-primary/60 transition-colors" />
+            {project.images && project.images[0] ? (
+              <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" />
+            ) : (
+              <Sparkles className="w-12 h-12 text-primary/30 group-hover:text-primary/60 transition-colors" />
+            )}
             <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-background/80 backdrop-blur-sm text-xs font-medium text-primary capitalize">
               {project.category}
             </div>
