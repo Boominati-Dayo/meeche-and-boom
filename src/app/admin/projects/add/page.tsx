@@ -1,16 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Plus, X } from "lucide-react";
+import { ArrowLeft, Plus, X, Upload, Image as ImageIcon, Loader2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+
+interface UploadedImage {
+  url: string;
+  publicId: string;
+}
 
 export default function AddProjectPage() {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [images, setImages] = useState<UploadedImage[]>([]);
   const [imageUrl, setImageUrl] = useState("");
+
   const [form, setForm] = useState({
     title: "",
     shortDesc: "",
@@ -27,9 +35,43 @@ export default function AddProjectPage() {
     showUrl: true,
   });
 
-  const addImage = () => {
-    if (imageUrl && !images.includes(imageUrl)) {
-      setImages([...images, imageUrl]);
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setUploading(true);
+    const newImages: UploadedImage[] = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+        if (data.success) {
+          newImages.push({ url: data.url, publicId: data.publicId });
+          toast.success(`Uploaded ${file.name}`);
+        } else {
+          toast.error(`Failed to upload ${file.name}`);
+        }
+      } catch (error) {
+        toast.error(`Error uploading ${file.name}`);
+      }
+    }
+
+    setImages([...images, ...newImages]);
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const addImageByUrl = () => {
+    if (imageUrl && !images.some((img) => img.url === imageUrl)) {
+      setImages([...images, { url: imageUrl, publicId: "" }]);
       setImageUrl("");
     }
   };
@@ -41,19 +83,19 @@ export default function AddProjectPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       const res = await fetch("/api/admin/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
-          images,
+          images: images.map((img) => img.url),
           features: form.features.split(",").map((f) => f.trim()).filter(Boolean),
           technologies: form.technologies.split(",").map((t) => t.trim()).filter(Boolean),
         }),
       });
-      
+
       if (res.ok) {
         toast.success("Project created successfully!");
         setTimeout(() => router.push("/admin/projects"), 1000);
@@ -74,13 +116,13 @@ export default function AddProjectPage() {
         <ArrowLeft className="w-4 h-4" />
         Back to Projects
       </Link>
-      
+
       <h1 className="text-2xl lg:text-3xl font-bold mb-8">Add New Project</h1>
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="glass rounded-xl p-4 lg:p-6 space-y-4">
           <h2 className="text-lg font-semibold">Basic Info</h2>
-          
+
           <div>
             <label className="block text-sm font-medium mb-2">Project Title *</label>
             <input
@@ -120,43 +162,76 @@ export default function AddProjectPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-2">Category *</label>
-            <select
-              required
-              value={form.category}
-              onChange={(e) => setForm({ ...form, category: e.target.value })}
-              className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-            >
-              <option value="">Select category</option>
-              <option value="silicone">Silicone Baby</option>
-              <option value="pets">Pet Sites</option>
-              <option value="tracking">Tracking Systems</option>
-              <option value="banking">Banking/Finance</option>
-              <option value="healthcare">Healthcare</option>
-              <option value="automotive">Automotive</option>
-              <option value="political">Political</option>
-              <option value="construction">Construction</option>
-              <option value="portfolio">Portfolio</option>
-              <option value="ecommerce">E-commerce</option>
-              <option value="other">Other</option>
-            </select>
+              <select
+                required
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
+              >
+                <option value="">Select category</option>
+                <option value="silicone">Silicone Baby</option>
+                <option value="pets">Pet Sites</option>
+                <option value="tracking">Tracking Systems</option>
+                <option value="banking">Banking/Finance</option>
+                <option value="healthcare">Healthcare</option>
+                <option value="automotive">Automotive</option>
+                <option value="political">Political</option>
+                <option value="construction">Construction</option>
+                <option value="portfolio">Portfolio</option>
+                <option value="ecommerce">E-commerce</option>
+                <option value="other">Other</option>
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Price Range</label>
-            <input
-              type="text"
-              value={form.priceRange}
-              onChange={(e) => setForm({ ...form, priceRange: e.target.value })}
-              className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-              placeholder="e.g., 75,000 - 120,000 XAF"
-            />
+              <input
+                type="text"
+                value={form.priceRange}
+                onChange={(e) => setForm({ ...form, priceRange: e.target.value })}
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
+                placeholder="e.g., 75,000 - 120,000 XAF"
+              />
             </div>
           </div>
         </div>
 
         <div className="glass rounded-xl p-4 lg:p-6 space-y-4">
           <h2 className="text-lg font-semibold">Images</h2>
-          <p className="text-sm text-muted">Add image URLs. First image will be the main thumbnail.</p>
-          
+          <p className="text-sm text-muted">Upload images or paste URL. First image will be the main thumbnail.</p>
+
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept="image/*"
+            multiple
+            onChange={handleFileUpload}
+            className="hidden"
+          />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploading}
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary text-background rounded-lg hover:bg-primary-light transition-colors disabled:opacity-50"
+          >
+            {uploading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Uploading...
+              </>
+            ) : (
+              <>
+                <Upload className="w-5 h-5" />
+                Upload Images from Device
+              </>
+            )}
+          </button>
+
+          <div className="flex items-center gap-2">
+            <div className="flex-1 h-px bg-border" />
+            <span className="text-xs text-muted">OR</span>
+            <div className="flex-1 h-px bg-border" />
+          </div>
+
           <div className="flex gap-2">
             <input
               type="url"
@@ -167,8 +242,9 @@ export default function AddProjectPage() {
             />
             <button
               type="button"
-              onClick={addImage}
-              className="px-4 py-2 lg:py-3 bg-secondary rounded-lg hover:bg-white/10 transition-colors"
+              onClick={addImageByUrl}
+              disabled={!imageUrl}
+              className="px-4 py-2 lg:py-3 bg-secondary rounded-lg hover:bg-white/10 transition-colors disabled:opacity-50"
             >
               <Plus className="w-5 h-5" />
             </button>
@@ -178,7 +254,7 @@ export default function AddProjectPage() {
             <div className="grid grid-cols-3 md:grid-cols-4 gap-4 mt-4">
               {images.map((img, i) => (
                 <div key={i} className="relative group">
-                  <img src={img} alt="" className="w-full h-20 md:h-24 rounded-lg object-cover" />
+                  <img src={img.url} alt="" className="w-full h-20 md:h-24 rounded-lg object-cover" />
                   <button
                     type="button"
                     onClick={() => removeImage(i)}
@@ -195,7 +271,7 @@ export default function AddProjectPage() {
 
         <div className="glass rounded-xl p-4 lg:p-6 space-y-4">
           <h2 className="text-lg font-semibold">Details</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-2">Client Name</label>
