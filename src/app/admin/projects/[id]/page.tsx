@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Plus, X } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function AddProjectPage() {
+export default function EditProjectPage() {
+  const params = useParams();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const projectId = params.id as string;
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [images, setImages] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState("");
   const [form, setForm] = useState({
@@ -27,6 +30,34 @@ export default function AddProjectPage() {
     showUrl: true,
   });
 
+  useEffect(() => {
+    fetch(`/api/admin/projects/${projectId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setForm({
+          title: data.title || "",
+          shortDesc: data.shortDesc || "",
+          description: data.description || "",
+          category: data.category || "",
+          priceRange: data.priceRange || "",
+          client: data.client || "",
+          visitUrl: data.visitUrl || "",
+          features: (data.features || []).join(", "),
+          technologies: (data.technologies || []).join(", "),
+          timeline: data.timeline || "",
+          status: data.status || "active",
+          featured: data.featured || false,
+          showUrl: data.showUrl !== false,
+        });
+        setImages(data.images || []);
+        setLoading(false);
+      })
+      .catch(() => {
+        toast.error("Failed to load project");
+        setLoading(false);
+      });
+  }, [projectId]);
+
   const addImage = () => {
     if (imageUrl && !images.includes(imageUrl)) {
       setImages([...images, imageUrl]);
@@ -40,11 +71,11 @@ export default function AddProjectPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setSaving(true);
     
     try {
-      const res = await fetch("/api/admin/projects", {
-        method: "POST",
+      const res = await fetch(`/api/admin/projects/${projectId}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
@@ -55,17 +86,25 @@ export default function AddProjectPage() {
       });
       
       if (res.ok) {
-        toast.success("Project created successfully!");
+        toast.success("Project updated successfully!");
         setTimeout(() => router.push("/admin/projects"), 1000);
       } else {
-        toast.error("Failed to create project");
+        toast.error("Failed to update project");
       }
     } catch (error) {
-      toast.error("Failed to create project");
+      toast.error("Failed to update project");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <p className="text-muted">Loading project...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto pt-4 lg:pt-12">
@@ -75,7 +114,7 @@ export default function AddProjectPage() {
         Back to Projects
       </Link>
       
-      <h1 className="text-2xl lg:text-3xl font-bold mb-8">Add New Project</h1>
+      <h1 className="text-2xl lg:text-3xl font-bold mb-8">Edit Project</h1>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="glass rounded-xl p-4 lg:p-6 space-y-4">
@@ -89,7 +128,6 @@ export default function AddProjectPage() {
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-              placeholder="e.g., Joana's Reborn Babies"
             />
           </div>
 
@@ -101,7 +139,6 @@ export default function AddProjectPage() {
               value={form.shortDesc}
               onChange={(e) => setForm({ ...form, shortDesc: e.target.value })}
               className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-              placeholder="Brief description for cards"
             />
           </div>
 
@@ -113,42 +150,40 @@ export default function AddProjectPage() {
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none resize-none text-sm lg:text-base"
-              placeholder="Detailed project description"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-2">Category *</label>
-            <select
-              required
-              value={form.category}
-              onChange={(e) => setForm({ ...form, category: e.target.value })}
-              className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-            >
-              <option value="">Select category</option>
-              <option value="silicone">Silicone Baby</option>
-              <option value="pets">Pet Sites</option>
-              <option value="tracking">Tracking Systems</option>
-              <option value="banking">Banking/Finance</option>
-              <option value="healthcare">Healthcare</option>
-              <option value="automotive">Automotive</option>
-              <option value="political">Political</option>
-              <option value="construction">Construction</option>
-              <option value="portfolio">Portfolio</option>
-              <option value="ecommerce">E-commerce</option>
-              <option value="other">Other</option>
-            </select>
+              <select
+                required
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
+              >
+                <option value="">Select category</option>
+                <option value="silicone">Silicone Baby</option>
+                <option value="pets">Pet Sites</option>
+                <option value="tracking">Tracking Systems</option>
+                <option value="banking">Banking/Finance</option>
+                <option value="healthcare">Healthcare</option>
+                <option value="automotive">Automotive</option>
+                <option value="political">Political</option>
+                <option value="construction">Construction</option>
+                <option value="portfolio">Portfolio</option>
+                <option value="ecommerce">E-commerce</option>
+                <option value="other">Other</option>
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Price Range</label>
-            <input
-              type="text"
-              value={form.priceRange}
-              onChange={(e) => setForm({ ...form, priceRange: e.target.value })}
-              className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-              placeholder="e.g., 75,000 - 120,000 XAF"
-            />
+              <input
+                type="text"
+                value={form.priceRange}
+                onChange={(e) => setForm({ ...form, priceRange: e.target.value })}
+                className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
+              />
             </div>
           </div>
         </div>
@@ -204,7 +239,6 @@ export default function AddProjectPage() {
                 value={form.client}
                 onChange={(e) => setForm({ ...form, client: e.target.value })}
                 className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-                placeholder="e.g., Joana's Reborn"
               />
             </div>
             <div>
@@ -214,7 +248,6 @@ export default function AddProjectPage() {
                 value={form.visitUrl}
                 onChange={(e) => setForm({ ...form, visitUrl: e.target.value })}
                 className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-                placeholder="https://..."
               />
             </div>
           </div>
@@ -226,7 +259,6 @@ export default function AddProjectPage() {
               value={form.features}
               onChange={(e) => setForm({ ...form, features: e.target.value })}
               className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-              placeholder="E-commerce, Gallery, Custom Orders"
             />
           </div>
 
@@ -237,7 +269,6 @@ export default function AddProjectPage() {
               value={form.technologies}
               onChange={(e) => setForm({ ...form, technologies: e.target.value })}
               className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-              placeholder="Next.js, Tailwind, MongoDB"
             />
           </div>
 
@@ -249,7 +280,6 @@ export default function AddProjectPage() {
                 value={form.timeline}
                 onChange={(e) => setForm({ ...form, timeline: e.target.value })}
                 className="w-full px-3 lg:px-4 py-2 lg:py-3 bg-secondary rounded-lg border border-border focus:border-primary focus:outline-none text-sm lg:text-base"
-                placeholder="e.g., 3 weeks"
               />
             </div>
             <div>
@@ -288,10 +318,10 @@ export default function AddProjectPage() {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={saving}
           className="w-full py-3 lg:py-4 bg-primary text-background rounded-lg font-semibold hover:bg-primary-light transition-colors disabled:opacity-50 text-sm lg:text-base"
         >
-          {loading ? "Creating..." : "Create Project"}
+          {saving ? "Saving..." : "Save Changes"}
         </button>
       </form>
     </div>

@@ -20,6 +20,7 @@ interface Project {
   images: string[];
   visitUrl: string;
   featured: boolean;
+  showUrl: boolean;
   features: string[];
   technologies: string[];
 }
@@ -100,7 +101,7 @@ export default function PortfolioDetailPage() {
                   <Sparkles className="w-20 h-20 text-primary/30" />
                 )}
               </div>
-              {project.visitUrl && (
+              {project.visitUrl && project.showUrl !== false && (
                 <a href={project.visitUrl} target="_blank" className="inline-flex items-center gap-2 text-primary hover:underline">
                   Visit Website <ExternalLink className="w-4 h-4" />
                 </a>
@@ -163,7 +164,7 @@ export default function PortfolioDetailPage() {
                 </div>
               </div>
 
-              {project.visitUrl && (
+              {project.visitUrl && project.showUrl !== false && (
                 <a href={project.visitUrl} target="_blank">
                   <button className="flex items-center gap-2 px-8 py-4 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors w-full justify-center">
                     Visit Live Site <ArrowRight className="w-5 h-5" />

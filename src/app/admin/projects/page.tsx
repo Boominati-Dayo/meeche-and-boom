@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Plus, Edit, Trash2, Eye, Image } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, Image, EyeOff, Link as LinkIcon } from "lucide-react";
 import { useAdmin } from "../layout";
 
 interface Project {
@@ -14,6 +14,8 @@ interface Project {
   status: string;
   images: string[];
   featured: boolean;
+  showUrl: boolean;
+  visitUrl?: string;
 }
 
 export default function ProjectsPage() {
@@ -67,6 +69,19 @@ export default function ProjectsPage() {
     }
   };
 
+  const toggleShowUrl = async (id: string, current: boolean) => {
+    try {
+      await fetch(`/api/admin/projects/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ showUrl: !current }),
+      });
+      setProjects(projects.map((p) => (p._id === id ? { ...p, showUrl: !current } : p)));
+    } catch (error) {
+      console.error("Failed to update project:", error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
@@ -97,6 +112,7 @@ export default function ProjectsPage() {
               <th className="text-left p-4 font-medium text-sm">Category</th>
               <th className="text-left p-4 font-medium text-sm">Status</th>
               <th className="text-left p-4 font-medium text-sm">Featured</th>
+              <th className="text-left p-4 font-medium text-sm">Link</th>
               <th className="text-right p-4 font-medium text-sm">Actions</th>
             </tr>
           </thead>
@@ -139,6 +155,25 @@ export default function ProjectsPage() {
                   </button>
                 </td>
                 <td className="p-4">
+                  {project.visitUrl ? (
+                    <button
+                      onClick={() => toggleShowUrl(project._id, project.showUrl !== false)}
+                      className={`px-2 py-1 rounded text-xs flex items-center gap-1 ${
+                        project.showUrl !== false ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
+                      }`}
+                      title={project.showUrl !== false ? "Click to hide link" : "Click to show link"}
+                    >
+                      {project.showUrl !== false ? (
+                        <><LinkIcon className="w-3 h-3" /> Visible</>
+                      ) : (
+                        <><EyeOff className="w-3 h-3" /> Hidden</>
+                      )}
+                    </button>
+                  ) : (
+                    <span className="text-xs text-muted">No URL</span>
+                  )}
+                </td>
+                <td className="p-4">
                   <div className="flex items-center justify-end gap-1">
                     <Link
                       href={`/portfolio/${project.slug}`}
@@ -162,13 +197,13 @@ export default function ProjectsPage() {
                 </td>
               </tr>
             ))}
-            {projects.length === 0 && (
-              <tr>
-                <td colSpan={5} className="p-8 text-center text-muted">
-                  No projects yet. Click "Add Project" to create one.
-                </td>
-              </tr>
-            )}
+{projects.length === 0 && (
+          <tr>
+            <td colSpan={6} className="p-8 text-center text-muted">
+              No projects yet. Click "Add Project" to create one.
+            </td>
+          </tr>
+        )}
           </tbody>
         </table>
       </div>
@@ -195,6 +230,13 @@ export default function ProjectsPage() {
                   </span>
                   {project.featured && (
                     <span className="px-2 py-0.5 bg-primary/20 text-primary rounded text-xs">Featured</span>
+                  )}
+                  {project.visitUrl && (
+                    <span className={`px-2 py-0.5 rounded text-xs ${
+                      project.showUrl !== false ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
+                    }`}>
+                      {project.showUrl !== false ? "Link Visible" : "Link Hidden"}
+                    </span>
                   )}
                 </div>
                 <h3 className="font-medium mt-1 truncate">{project.title}</h3>

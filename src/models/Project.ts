@@ -16,6 +16,7 @@ export interface IProject extends Document {
   completionDate: Date;
   featured: boolean;
   status: "active" | "draft" | "archived";
+  showUrl: boolean;
   tags: string[];
   order: number;
   createdAt: Date;
@@ -39,6 +40,7 @@ const ProjectSchema = new Schema<IProject>(
     completionDate: { type: Date },
     featured: { type: Boolean, default: false },
     status: { type: String, enum: ["active", "draft", "archived"], default: "active" },
+    showUrl: { type: Boolean, default: true },
     tags: [{ type: String }],
     order: { type: Number, default: 0 },
   },
