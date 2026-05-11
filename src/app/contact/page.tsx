@@ -8,15 +8,9 @@ import { ArrowLeft, Mail, Phone, MapPin, Send, Check, Loader2 } from "lucide-rea
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const services = [
-  "Silicone Baby Website",
-  "Pet Breeder Site",
-  "Tracking System",
-  "E-commerce",
-  "Business Website",
-  "Banking Platform",
-  "Other",
-];
+import { contactFormFields } from "@/lib/data";
+
+const serviceOptions = contactFormFields.projectTypes;
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -159,8 +153,8 @@ export default function ContactPage() {
                       className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:border-primary transition-colors"
                     >
                       <option value="">Select a service</option>
-                      {services.map((service) => (
-                        <option key={service} value={service}>{service}</option>
+                      {serviceOptions.map((service) => (
+                        <option key={service.id} value={service.name}>{service.name} - {service.priceRange}</option>
                       ))}
                     </select>
                   </div>
@@ -226,7 +220,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-medium">Phone</p>
-                      <p className="text-muted">+1 (555) 123-4567</p>
+                      <p className="text-muted">+237 682 356 604</p>
+                      <p className="text-muted">+237 679 080 426</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">

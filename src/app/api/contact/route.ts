@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { connectDB } from "@/lib/mongodb";
+import { Contact } from "@/models/Contact";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -23,6 +25,19 @@ export async function POST(request: Request) {
       );
     }
 
+    // Save to MongoDB
+    await connectDB();
+    const contact = new Contact({
+      name,
+      email,
+      phone,
+      service,
+      message,
+      status: "new",
+    });
+    await contact.save();
+
+    // Send email notification
     const mailOptions = {
       from: `"Meeche & Boom Co." <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER,
@@ -92,7 +107,7 @@ Message:
 ${message}
 
 ---
-This email was sent from the BOOMINATI contact form.
+This email was sent from the Meeche & Boom Co. contact form.
 Sent at: ${new Date().toLocaleString()}
       `,
     };
@@ -100,13 +115,13 @@ Sent at: ${new Date().toLocaleString()}
     await transporter.sendMail(mailOptions);
 
     return NextResponse.json(
-      { success: true, message: "Email sent successfully" },
+      { success: true, message: "Message sent successfully" },
       { status: 200 }
     );
   } catch (error) {
     console.error("Contact form error:", error);
     return NextResponse.json(
-      { error: "Failed to send email" },
+      { error: "Failed to send message" },
       { status: 500 }
     );
   }

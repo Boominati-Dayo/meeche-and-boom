@@ -1,14 +1,23 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, Check, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Sparkles, Loader2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { pricingPackages } from "@/lib/data";
 
-function PricingCard({ pkg, index }: { pkg: typeof pricingPackages[0]; index: number }) {
+interface Package {
+  _id: string;
+  name: string;
+  price: string;
+  description: string;
+  features: string[];
+  popular: boolean;
+  order: number;
+}
+
+function PricingCard({ pkg, index }: { pkg: Package; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
 
@@ -31,8 +40,8 @@ function PricingCard({ pkg, index }: { pkg: typeof pricingPackages[0]; index: nu
         <p className="text-muted text-sm mb-6">{pkg.description}</p>
         
         <ul className="space-y-3 mb-8">
-          {pkg.features.map((feature) => (
-            <li key={feature} className="flex items-center gap-3">
+          {pkg.features.map((feature, i) => (
+            <li key={i} className="flex items-center gap-3">
               <Check className="w-5 h-5 text-primary flex-shrink-0" />
               <span className="text-sm">{feature}</span>
             </li>
@@ -58,8 +67,20 @@ function PricingCard({ pkg, index }: { pkg: typeof pricingPackages[0]; index: nu
 }
 
 export default function PricingPage() {
+  const [packages, setPackages] = useState<Package[]>([]);
+  const [loading, setLoading] = useState(true);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    fetch("/api/pricing")
+      .then((res) => res.json())
+      .then((data) => {
+        setPackages(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
   return (
     <main className="min-h-screen">
@@ -84,11 +105,21 @@ export default function PricingPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
-            {pricingPackages.map((pkg, index) => (
-              <PricingCard key={pkg.name} pkg={pkg} index={index} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : packages.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+              {packages.map((pkg, index) => (
+                <PricingCard key={pkg._id} pkg={pkg} index={index} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-muted">
+              Pricing packages coming soon. <Link href="/contact" className="text-primary hover:underline">Contact us</Link> for a custom quote.
+            </div>
+          )}
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -98,7 +129,7 @@ export default function PricingPage() {
           >
             <h3 className="text-xl font-bold mb-4">Need a Custom Solution?</h3>
             <p className="text-muted mb-6">
-              Every business is unique. Contact me for a custom quote tailored to your specific requirements.
+              Every business is unique. Contact us for a custom quote tailored to your specific requirements.
             </p>
             <Link href="/contact">
               <motion.button

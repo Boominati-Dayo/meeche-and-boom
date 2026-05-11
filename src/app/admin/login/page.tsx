@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Loader2, CheckCircle, XCircle, Sparkles, Eye, EyeOff } from "lucide-react";
@@ -13,21 +13,6 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [initialCheck, setInitialCheck] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = document.cookie.includes("boominati_admin=");
-      if (token) {
-        setIsAuthenticated(true);
-        router.push("/admin");
-      } else {
-        setInitialCheck(false);
-      }
-    };
-    checkAuth();
-  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,33 +20,23 @@ export default function AdminLogin() {
     setError("");
     setSuccess(false);
 
-    // Simple auth check (matching .env credentials)
     const adminEmail = "admin@boominati.com";
     const adminPassword = "BOOMINATI100$";
 
+    await new Promise(resolve => setTimeout(resolve, 500));
+
     if (email === adminEmail && password === adminPassword) {
       setSuccess(true);
-      document.cookie = "boominati_admin=authenticated; path=/; max-age=86400; SameSite=Strict";
+      document.cookie = `boominati_admin=authenticated; path=/; max-age=${60*60*24}; SameSite=Strict`;
       setTimeout(() => {
         router.push("/admin");
-      }, 800);
+      }, 500);
     } else {
       setError("Invalid email or password");
     }
     
     setLoading(false);
   };
-
-  if (isAuthenticated || initialCheck) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="w-full max-w-md p-8 space-y-6 glass rounded-2xl text-center">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary" />
-          <p className="text-muted">Checking authentication...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">

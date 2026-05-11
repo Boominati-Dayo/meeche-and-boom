@@ -1,12 +1,25 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Filter, Search, Sparkles, ArrowRight } from "lucide-react";
+import { ArrowLeft, Search, Sparkles, Loader2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { projects } from "@/lib/data";
+
+interface Project {
+  _id: string;
+  title: string;
+  client: string;
+  description: string;
+  category: string;
+  priceRange: string;
+  tags: string[];
+  images: string[];
+  visitUrl: string;
+  featured: boolean;
+  status: string;
+}
 
 const categories = [
   { id: "all", label: "All Projects" },
@@ -20,7 +33,7 @@ const categories = [
   { id: "ecommerce", label: "E-commerce" },
 ];
 
-function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
+function ProjectCard({ project, index }: { project: Project; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
 
@@ -31,7 +44,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.05, duration: 0.5 }}
     >
-      <Link href={`/portfolio/${project.id}`}>
+      <Link href={`/portfolio/${project._id}`}>
         <div className="group h-full glass rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:glow">
           <div className="relative h-48 bg-gradient-to-br from-secondary to-accent flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
@@ -42,11 +55,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           </div>
           
           <div className="p-6">
-            <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{project.name}</h3>
+            <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
             <p className="text-muted text-sm mb-4 line-clamp-2">{project.description}</p>
             
             <div className="flex flex-wrap gap-2 mb-4">
-              {project.tags.map((tag) => (
+              {(project.tags || []).map((tag: string) => (
                 <span key={tag} className="px-2 py-1 bg-secondary rounded-full text-xs text-muted">
                   {tag}
                 </span>
@@ -54,7 +67,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-primary font-medium">{project.price}</span>
+              <span className="text-primary font-medium">{project.priceRange || "Custom"}</span>
               <div className="flex items-center gap-1 text-sm text-muted group-hover:text-primary transition-colors">
                 View Details
               </div>
@@ -67,14 +80,26 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
 }
 
 export default function PortfolioPage() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
   const filteredProjects = projects.filter((project) => {
     const matchesCategory = activeCategory === "all" || project.category === activeCategory;
-    const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      (project.tags || []).some((tag: string) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
@@ -135,31 +160,37 @@ export default function PortfolioPage() {
             </div>
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCategory + searchQuery}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              {filteredProjects.length > 0 ? (
-                filteredProjects.map((project, index) => (
-                  <ProjectCard key={project.id} project={project} index={index} />
-                ))
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="col-span-full text-center py-16"
-                >
-                  <Sparkles className="w-16 h-16 mx-auto mb-4 text-primary/30" />
-                  <h3 className="text-xl font-semibold mb-2">No projects found</h3>
-                  <p className="text-muted">Try adjusting your filters or search query</p>
-                </motion.div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+          {loading ? (
+            <div className="flex justify-center py-16">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeCategory + searchQuery}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                {filteredProjects.length > 0 ? (
+                  filteredProjects.map((project, index) => (
+                    <ProjectCard key={project._id} project={project} index={index} />
+                  ))
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="col-span-full text-center py-16"
+                  >
+                    <Sparkles className="w-16 h-16 mx-auto mb-4 text-primary/30" />
+                    <h3 className="text-xl font-semibold mb-2">No projects found</h3>
+                    <p className="text-muted">Try adjusting your filters or search query</p>
+                  </motion.div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          )}
 
           <div className="text-center mt-16">
             <p className="text-muted">

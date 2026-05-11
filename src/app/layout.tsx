@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Montserrat, Keania_One } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const montserrat = Montserrat({
   variable: "--font-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
       <body className={`${montserrat.variable} ${keaniaOne.variable} min-h-screen bg-background text-foreground antialiased transition-colors duration-300`}>
         <ThemeProvider>
           {children}
+          <WhatsAppButton />
         </ThemeProvider>
       </body>
     </html>

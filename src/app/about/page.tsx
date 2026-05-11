@@ -49,7 +49,7 @@ export default function AboutPage() {
               transition={{ delay: 0.2 }}
               className="space-y-6"
             >
-              <h2 className="text-2xl font-bold">Who I Am</h2>
+              <h2 className="text-2xl font-bold">Who We Are</h2>
               <p className="text-muted leading-relaxed">
                 Meeche & Boom Co. is a powerful combination of Meeche Brand (marketing) and Boominati (development). 
                 We get clients first, then build their sites. Specializing in silicone baby websites, pet breeder platforms, 
@@ -67,7 +67,7 @@ export default function AboutPage() {
               transition={{ delay: 0.4 }}
               className="space-y-6"
             >
-              <h2 className="text-2xl font-bold">What I Do</h2>
+              <h2 className="text-2xl font-bold">What We Do</h2>
               <ul className="space-y-4">
                 {[
                   "Custom website development with modern technologies",

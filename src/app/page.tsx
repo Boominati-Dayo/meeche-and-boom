@@ -1,13 +1,13 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Zap, Shield, TrendingUp, Clock, Users, ChevronRight, HelpCircle } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Shield, TrendingUp, Clock, Users, ChevronRight, HelpCircle, Loader2 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { Footer } from "@/components/Footer";
-import { services, faqs, projects } from "@/lib/data";
+import { services, faqs } from "@/lib/data";
 
 const iconMap: Record<string, typeof Sparkles> = {
   Baby: Sparkles,
@@ -35,10 +35,6 @@ function Hero() {
 
   return (
     <section className="min-h-screen relative overflow-hidden pt-20 pb-12">
-      <div className="absolute inset-0">
-        <div className="hidden lg:block absolute inset-0 bg-[url('/assets/home_hero.png')] bg-cover bg-right" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-      </div>
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       
@@ -91,6 +87,16 @@ function Hero() {
               </Link>
             </div>
           </div>
+          <div className="hidden lg:block flex-shrink-0">
+            <motion.img 
+              src="/assets/meeche_team.png" 
+              alt="Meeche & Boom Co. Team" 
+              className="w-[300px] h-auto object-contain"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -127,44 +133,53 @@ function About() {
     { icon: Users, label: "Support", value: "24/7" },
   ];
 
-  return (
-    <section className="py-16 sm:py-20 md:py-24">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
-          <div>
+return (
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 relative overflow-hidden">
+      <div 
+        className="absolute inset-0 z-0 hidden lg:block"
+        style={{
+          backgroundImage: "url('/assets/new_about_image.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <div 
+        className="absolute inset-0 z-0 bg-black/90 lg:bg-black/80"
+        style={{
+          background: "linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.75) 60%, rgba(0,0,0,0.95) 100%)"
+        }}
+      />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="lg:text-left">
+          <div className="hidden lg:block">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
               About <span className="text-gradient">Meeche & Boom Co.</span>
             </h2>
-            <p className="text-muted text-base sm:text-lg mb-4">
-              Meeche & Boom Co. combines the power of Meeche Brand marketing with Boominati web development.
-            </p>
-            <p className="text-muted text-base sm:text-lg mb-6">
-              We get clients, then build their sites. Specializing in silicone baby websites, pet platforms, and custom digital solutions. We're not just developers - we build results.
-            </p>
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {benefits.map((item: any, idx: number) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <item.icon className="w-5 h-5 text-primary" />
-                  <div>
-                    <p className="text-sm font-medium">{item.value}</p>
-                    <p className="text-xs text-muted">{item.label}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          </div>
+          <div className="lg:hidden mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+              About <span className="text-gradient">Meeche & Boom Co.</span>
+            </h2>
+          </div>
+          <p className="text-sm sm:text-base md:text-lg mb-4 text-center lg:text-left">
+            Meeche & Boom Co. combines the power of Meeche Brand marketing with Boominati web development.
+          </p>
+          <p className="text-sm sm:text-base md:text-lg mb-6 text-center lg:text-left">
+            We get clients, then build their sites. Specializing in silicone baby websites, pet platforms, and custom digital solutions. We're not just developers - we build results.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 justify-center">
+            {benefits.map((item: any, idx: number) => (
+              <div key={idx} className="flex flex-col items-center text-center">
+                <item.icon className="w-6 h-6 text-primary mb-2" />
+                <p className="text-sm font-medium">{item.value}</p>
+                <p className="text-xs text-muted/80">{item.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
             <Link href="/about" className="inline-flex items-center gap-2 text-primary hover:underline">
               Learn more <ChevronRight className="w-4 h-4" />
             </Link>
-          </div>
-
-          <div className="relative order-first lg:order-last">
-            <div className="aspect-square max-w-xs sm:max-w-sm md:max-w-md mx-auto lg:mx-0 relative -translate-x-2 translate-y-2 lg:-translate-x-4 lg:translate-y-4">
-              <div className="absolute inset-0 bg-secondary rounded-2xl skew-x-[-10deg] translate-x-2 translate-y-2" />
-              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-2xl -translate-x-1 -translate-y-1" />
-              <div className="relative glass rounded-2xl flex items-center justify-center p-1 sm:p-2 skew-x-[-10deg] overflow-hidden">
-                <img src="/assets/meeche_team.png" alt="Meeche & Boom Co." className="w-full h-full object-contain" />
-              </div>
-            </div>
           </div>
         </motion.div>
       </div>
@@ -173,8 +188,20 @@ function About() {
 }
 
 function FeaturedWork() {
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => {
+        setProjects(data.slice(0, 6));
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
   return (
     <section className="py-16 sm:py-20 md:py-24 bg-secondary/20">
@@ -188,26 +215,32 @@ function FeaturedWork() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8">
-          {projects.slice(0, 6).map((project, idx) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: idx * 0.1 }}
-            >
-              <Link href={`/portfolio/${project.id}`} className="block group glass rounded-xl overflow-hidden hover:border-primary/50 transition-all">
-                <div className="h-32 bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
-                  <Sparkles className="w-10 h-10 text-primary/30 group-hover:text-primary/60 transition-colors" />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">{project.name}</h3>
-                  <p className="text-xs text-muted capitalize">{project.category}</p>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-8">
+            {projects.map((project, idx) => (
+              <motion.div
+                key={project._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: idx * 0.1 }}
+              >
+                <Link href={`/portfolio/${project._id}`} className="block group glass rounded-xl overflow-hidden hover:border-primary/50 transition-all">
+                  <div className="h-32 bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
+                    <Sparkles className="w-10 h-10 text-primary/30 group-hover:text-primary/60 transition-colors" />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">{project.title}</h3>
+                    <p className="text-xs text-muted capitalize">{project.category}</p>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         <div className="text-center">
           <Link href="/portfolio">
@@ -326,13 +359,10 @@ function FAQSection() {
 }
 
 function CTA() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
-
   return (
     <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-primary/5" />
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={isInView ? { opacity: 1, scale: 1 } : {}} className="relative max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 text-center">
+      <div className="absolute inset-0 bg-primary/10" />
+      <div className="relative max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
           Ready to Build Something <span className="text-gradient">Amazing?</span>
         </h2>
@@ -344,7 +374,7 @@ function CTA() {
             Start Your Project <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
           </motion.button>
         </Link>
-      </motion.div>
+      </div>
     </section>
   );
 }
