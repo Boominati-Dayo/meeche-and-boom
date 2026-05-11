@@ -176,8 +176,9 @@ export default function ProjectsPage() {
                 <td className="p-4">
                   <div className="flex items-center justify-end gap-1">
                     <Link
-                      href={`/portfolio/${project.slug}`}
+                      href={`/portfolio/${project._id}`}
                       className="p-2 hover:bg-secondary rounded-lg transition-colors"
+                      title="View project"
                     >
                       <Eye className="w-4 h-4" />
                     </Link>
@@ -245,7 +246,7 @@ export default function ProjectsPage() {
             </div>
             <div className="flex items-center gap-2">
               <Link
-                href={`/portfolio/${project.slug}`}
+                href={`/portfolio/${project._id}`}
                 className="flex-1 flex items-center justify-center gap-1 py-2 bg-secondary rounded-lg text-xs"
               >
                 <Eye className="w-3 h-3" /> View
