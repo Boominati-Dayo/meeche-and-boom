@@ -2,7 +2,7 @@
 
 import { useState, createContext, useContext } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { Sparkles, Plus, Image, FileText, MessageSquare, DollarSign, Loader2, Menu, X, LogOut, Send } from "lucide-react";
 
@@ -31,11 +31,16 @@ export const useAdmin = () => useContext(AdminContext);
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [checking, setChecking] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
+    if (pathname === "/admin/login") {
+      setChecking(false);
+      return;
+    }
     const cookies = document.cookie.split(";");
     const hasToken = cookies.some((c) => c.trim().startsWith("boominati_admin="));
     if (!hasToken) {
@@ -43,7 +48,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     } else {
       setChecking(false);
     }
-  }, [router]);
+  }, [pathname, router]);
 
   const handleLogout = () => {
     document.cookie = "boominati_admin=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -58,6 +63,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
+  }
+
+  if (pathname === "/admin/login") {
+    return <>{children}</>;
   }
 
   return (

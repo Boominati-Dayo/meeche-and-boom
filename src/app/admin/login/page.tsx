@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Loader2, CheckCircle, XCircle, Sparkles, Eye, EyeOff } from "lucide-react";
@@ -13,6 +13,14 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const cookies = document.cookie.split(";");
+    const hasToken = cookies.some((c) => c.trim().startsWith("boominati_admin="));
+    if (hasToken) {
+      router.push("/admin");
+    }
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
