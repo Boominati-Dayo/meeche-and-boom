@@ -1,13 +1,22 @@
 "use client";
 
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { ArrowLeft, Sparkles, ArrowRight, Check, Clock, ChevronRight, Palette, ShoppingCart, DollarSign, Baby, PawPrint, MapPin, Phone, Building, Edit, Award, ExternalLink } from "lucide-react";
 import { motion, useInView } from "framer-motion";
-import { ArrowLeft, Sparkles, ArrowRight, Check, Clock, ChevronRight, Palette, ShoppingCart, DollarSign, Baby, PawPrint, MapPin, Phone, Building, Edit, Award } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { services } from "@/lib/data";
+
+interface Project {
+  _id: string;
+  title: string;
+  shortDesc: string;
+  category: string;
+  visitUrl: string;
+  images: string[];
+}
 
 const iconMap: Record<string, typeof Sparkles> = {
   Baby: Sparkles,
@@ -22,12 +31,43 @@ const iconMap: Record<string, typeof Sparkles> = {
   Award: Award,
 };
 
+const categoryToServiceId: Record<string, string> = {
+  silicone: "silicone",
+  pets: "pets",
+  tracking: "tracking",
+  logistics: "tracking",
+  banking: "banking",
+  healthcare: "healthcare",
+  automotive: "business",
+  political: "business",
+  construction: "business",
+  portfolio: "portfolio",
+  ecommerce: "ecommerce",
+};
+
 export default function ServiceDetailPage() {
   const params = useParams();
   const serviceId = params.id as string;
   const service = services.find(s => s.id === serviceId);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
+  const [relatedProjects, setRelatedProjects] = useState<Project[]>([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
+
+  useEffect(() => {
+    if (service) {
+      fetch("/api/projects")
+        .then((res) => res.json())
+        .then((data) => {
+          const filtered = data.filter(
+            (p: Project) => categoryToServiceId[p.category] === serviceId
+          ).slice(0, 6);
+          setRelatedProjects(filtered);
+        })
+        .catch(console.error)
+        .finally(() => setLoadingProjects(false));
+    }
+  }, [serviceId, service]);
 
   if (!service) {
     return (
@@ -52,13 +92,13 @@ export default function ServiceDetailPage() {
       
       <div className="pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+          <div className="mb-8">
             <Link href="/" className="inline-flex items-center gap-2 text-muted hover:text-primary transition-colors">
               <ArrowLeft className="w-4 h-4" /> Back to Home
             </Link>
-          </motion.div>
+          </div>
 
-          <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             <div>
               <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mb-6">
                 <Icon className="w-10 h-10 text-primary" />
@@ -71,9 +111,9 @@ export default function ServiceDetailPage() {
               </div>
 
               <Link href="/contact">
-                <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex items-center gap-2 px-8 py-4 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors">
+                <button className="flex items-center gap-2 px-8 py-4 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors">
                   Get Started <ArrowRight className="w-5 h-5" />
-                </motion.button>
+                </button>
               </Link>
             </div>
 
@@ -95,25 +135,60 @@ export default function ServiceDetailPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.3 }} className="mt-16">
-            <Link href="/portfolio">
-              <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex items-center gap-2 px-8 py-4 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors">
-                View All Projects <ArrowRight className="w-5 h-5" />
-              </motion.button>
-            </Link>
-          </motion.div>
+          {relatedProjects.length > 0 && (
+            <div className="mt-16">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl sm:text-3xl font-bold">Related Projects</h2>
+                <Link href="/portfolio" className="text-primary hover:underline text-sm">
+                  View All
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+                {relatedProjects.map((project) => (
+                  <Link
+                    key={project._id}
+                    href={`/portfolio/${project._id}`}
+                    className="group glass rounded-xl overflow-hidden hover:border-primary/50 transition-all"
+                  >
+                    <div className="aspect-video bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
+                      {project.images && project.images[0] ? (
+                        <img
+                          src={project.images[0]}
+                          alt={project.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Sparkles className="w-12 h-12 text-primary/30" />
+                      )}
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-muted line-clamp-2">{project.shortDesc}</p>
+                      {project.visitUrl && (
+                        <span className="inline-flex items-center gap-1 text-xs text-primary mt-2">
+                          <ExternalLink className="w-3 h-3" /> Visit Site
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.5 }} className="mt-16 p-6 sm:p-8 glass rounded-2xl text-center">
+          <div className="mt-16 p-6 sm:p-8 glass rounded-2xl text-center">
             <h3 className="text-xl sm:text-2xl font-bold mb-3">Ready to get started?</h3>
             <p className="text-muted mb-6">Contact us today for a free consultation on your {service.name.toLowerCase()} project.</p>
             <Link href="/contact">
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 mx-auto px-6 sm:px-8 py-3 sm:py-4 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors text-sm sm:text-base">
+              <button className="flex items-center gap-2 mx-auto px-6 sm:px-8 py-3 sm:py-4 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors text-sm sm:text-base">
                 Contact Us <ChevronRight className="w-4 sm:w-5 h-4 sm:h-5" />
-              </motion.button>
+              </button>
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
 

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Search, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/data";
-import { projects, services } from "@/lib/data";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -17,13 +16,32 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+interface SearchResult {
+  id: string;
+  name: string;
+  category: string;
+  shortDesc?: string;
+  description?: string;
+  type: "project" | "service";
+}
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [allProjects, setAllProjects] = useState<any[]>([]);
+  const [allServices, setAllServices] = useState<any[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/projects").then((r) => r.json()).catch(() => []),
+    ]).then(([projects]) => {
+      setAllProjects(Array.isArray(projects) ? projects : []);
+    });
+  }, []);
 
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -32,19 +50,25 @@ export function Navbar() {
     }
 
     const query = searchQuery.toLowerCase();
-    const projectResults = projects.filter(p => 
-      p.name.toLowerCase().includes(query) || 
-      p.category.toLowerCase().includes(query) ||
-      p.tags.some(t => t.toLowerCase().includes(query))
-    ).slice(0, 5);
-    
-    const serviceResults = services.filter(s => 
-      s.name.toLowerCase().includes(query) ||
-      s.description.toLowerCase().includes(query))
-    .slice(0, 3);
 
-    setSearchResults([...projectResults.map(p => ({...p, type: 'project'})), ...serviceResults.map(s => ({...s, type: 'service'}))]);
-  }, [searchQuery]);
+    const projectResults = allProjects
+      .filter(
+        (p) =>
+          p.title?.toLowerCase().includes(query) ||
+          p.category?.toLowerCase().includes(query) ||
+          p.shortDesc?.toLowerCase().includes(query)
+      )
+      .slice(0, 5)
+      .map((p) => ({
+        id: p._id,
+        name: p.title,
+        category: p.category,
+        shortDesc: p.shortDesc,
+        type: "project" as const,
+      }));
+
+    setSearchResults(projectResults);
+  }, [searchQuery, allProjects]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -56,13 +80,13 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleResultClick = (result: any) => {
+  const handleResultClick = (result: SearchResult) => {
     setSearchOpen(false);
     setSearchQuery("");
-    if (result.type === 'service') {
-      router.push(`/services/${result.id}`);
-    } else {
+    if (result.type === "project") {
       router.push(`/portfolio/${result.id}`);
+    } else {
+      router.push(`/services/${result.id}`);
     }
   };
 
@@ -114,7 +138,7 @@ export function Navbar() {
                     <div className="relative mb-3">
                       <input
                         type="text"
-                        placeholder="Search services, websites..."
+                        placeholder="Search projects..."
                         className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-secondary border border-border rounded-lg text-sm sm:text-base focus:outline-none focus:border-primary"
                         autoFocus
                         value={searchQuery}
@@ -138,7 +162,7 @@ export function Navbar() {
                                     {result.name}
                                   </p>
                                   <p className="text-xs text-muted capitalize">
-                                    {result.type} • {result.category || result.id}
+                                    {result.type} • {result.category}
                                   </p>
                                 </div>
                                 <ArrowRight className="w-3 h-3 text-muted flex-shrink-0" />
@@ -155,15 +179,18 @@ export function Navbar() {
                           <p className="text-xs text-muted uppercase tracking-widest mb-3 px-1">Popular</p>
                           <div className="flex flex-wrap gap-2">
                             {[
-                              { label: 'Silicone', id: 'silicone' },
-                              { label: 'Pets', id: 'pets' },
-                              { label: 'Tracking', id: 'tracking' },
-                              { label: 'E-commerce', id: 'ecommerce' }
+                              { label: "Silicone", id: "silicone" },
+                              { label: "Pets", id: "pets" },
+                              { label: "Tracking", id: "tracking" },
+                              { label: "E-commerce", id: "ecommerce" },
                             ].map((item) => (
                               <Link
                                 key={item.id}
                                 href={`/services/${item.id}`}
-                                onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
+                                onClick={() => {
+                                  setSearchOpen(false);
+                                  setSearchQuery("");
+                                }}
                                 className="px-3 py-1.5 bg-secondary hover:bg-primary/20 rounded-full text-xs font-medium text-muted transition-colors"
                               >
                                 {item.label}

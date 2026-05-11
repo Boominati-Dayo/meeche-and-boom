@@ -20,11 +20,11 @@ export async function POST(request: Request) {
   }
 }
 
-// Admin - Get all testimonials
+// Public - Get approved testimonials
 export async function GET() {
   try {
     await connectDB();
-    const testimonials = await Testimonial.find().sort({ createdAt: -1 });
+    const testimonials = await Testimonial.find({ status: "approved" }).sort({ createdAt: -1 });
     return NextResponse.json(testimonials);
   } catch (error) {
     return NextResponse.json({ error: "Failed to fetch testimonials" }, { status: 500 });
