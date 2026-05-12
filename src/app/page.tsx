@@ -64,7 +64,7 @@ function Hero() {
       </div>
         
       <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-start justify-center lg:items-center lg:justify-between min-h-[60vh] lg:min-h-[80vh] gap-8">
+        <div className="flex flex-col lg:flex-row items-start justify-center lg:items-center lg:justify-between min-h-[50vh] lg:min-h-[80vh] gap-8">
           <div className="text-left flex-1 max-w-2xl lg:max-w-xl">
             <h1 className="text-6xl xs:text-7xl sm:text-8xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-8 sm:mb-10 leading-[1.02] lg:leading-[1.05]">
               <span className="block">Building</span>
@@ -74,7 +74,7 @@ function Hero() {
             <p className="text-lg sm:text-xl md:text-2xl lg:text-xl text-muted max-w-xl mb-10 sm:mb-12 leading-relaxed">
               Specializing in silicone baby stores, pet platforms, tracking systems, e-commerce & custom web solutions. Built for businesses that want results.
             </p>
-            <div className="flex flex-col sm:flex-row items-start lg:justify-start gap-4 sm:gap-6">
+            <div className="flex flex-row items-center justify-center gap-4 sm:gap-6">
               <Link href="/portfolio">
                 <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors text-base sm:text-lg">
                   View Work <ArrowRight className="w-5 sm:w-6 h-5 sm:h-6" />
