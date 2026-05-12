@@ -48,7 +48,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <div className="group h-full glass rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:glow">
           <div className="relative h-48 bg-gradient-to-br from-primary/20 to-secondary overflow-hidden">
             {project.images && project.images[0] ? (
-              <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" style={{ width: '100%', height: '100%' }} />
+              <img 
+                src={project.images[0]} 
+                alt={project.title} 
+                className="w-full h-full object-cover" 
+                loading="lazy"
+                style={{ width: '100%', height: '100%' }}
+              />
             ) : (
               <Sparkles className="w-12 h-12 text-primary/30 group-hover:text-primary/60 transition-colors" />
             )}
