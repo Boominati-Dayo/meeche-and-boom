@@ -67,50 +67,68 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             <div>
               {allImages.length > 0 ? (
-                <div 
-                  className="relative aspect-video rounded-2xl overflow-hidden bg-secondary/30"
-                  onMouseEnter={() => setIsPaused(true)}
-                  onMouseLeave={() => setIsPaused(false)}
-                >
-                  <img 
-                    src={allImages[currentSlide]} 
-                    alt={`${project.title} - Image ${currentSlide + 1}`} 
-                    className="w-full h-full object-cover"
-                  />
-                  
+                <>
+                  <div 
+                    className="relative aspect-video rounded-2xl overflow-hidden bg-secondary/30"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                  >
+                    <img 
+                      src={allImages[currentSlide]} 
+                      alt={`${project.title} - Image ${currentSlide + 1}`} 
+                      className="w-full h-full object-cover"
+                    />
+                    
+                    {allImages.length > 1 && (
+                      <>
+                        <button 
+                          onClick={prevSlide}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-colors"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button 
+                          onClick={nextSlide}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-colors"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+                        
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                          {allImages.map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => goToSlide(idx)}
+                              className={`w-2 h-2 rounded-full transition-all ${
+                                idx === currentSlide ? 'bg-primary w-6' : 'bg-background/50 hover:bg-background/80'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        
+                        <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-background/80 backdrop-blur-sm text-sm font-medium">
+                          {currentSlide + 1} / {allImages.length}
+                        </div>
+                      </>
+                    )}
+                  </div>
+
                   {allImages.length > 1 && (
-                    <>
-                      <button 
-                        onClick={prevSlide}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-colors"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                      </button>
-                      <button 
-                        onClick={nextSlide}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-colors"
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                      
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                        {allImages.map((_, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => goToSlide(idx)}
-                            className={`w-2 h-2 rounded-full transition-all ${
-                              idx === currentSlide ? 'bg-primary w-6' : 'bg-background/50 hover:bg-background/80'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      
-                      <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-background/80 backdrop-blur-sm text-sm font-medium">
-                        {currentSlide + 1} / {allImages.length}
-                      </div>
-                    </>
+                    <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                      {allImages.map((img, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => goToSlide(idx)}
+                          className={`flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all ${
+                            idx === currentSlide ? 'border-primary' : 'border-transparent hover:border-primary/50'
+                          }`}
+                        >
+                          <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
                   )}
-                </div>
+                </>
               ) : (
                 <div className="aspect-video bg-gradient-to-br from-secondary to-accent rounded-2xl flex items-center justify-center">
                   <Sparkles className="w-20 h-20 text-primary/30" />
