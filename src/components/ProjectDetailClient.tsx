@@ -52,11 +52,25 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             <div>
               <div className="aspect-video bg-gradient-to-br from-secondary to-accent rounded-2xl flex items-center justify-center mb-6 overflow-hidden">
                 {project.images && project.images[0] ? (
-                  <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" />
+                  <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" loading="lazy" />
                 ) : (
                   <Sparkles className="w-20 h-20 text-primary/30" />
                 )}
               </div>
+              
+              {project.images && project.images.length > 1 && (
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold mb-3">Project Gallery</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                    {project.images.slice(1).map((img, idx) => (
+                      <div key={idx} className="aspect-video rounded-lg overflow-hidden bg-secondary/30">
+                        <img src={img} alt={`${project.title} screenshot ${idx + 2}`} className="w-full h-full object-cover" loading="lazy" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
               {project.visitUrl && project.showUrl !== false && (
                 <a href={project.visitUrl} target="_blank" className="inline-flex items-center gap-2 text-primary hover:underline">
                   Visit Website <ExternalLink className="w-4 h-4" />
