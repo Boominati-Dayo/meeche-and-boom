@@ -34,7 +34,7 @@ function Hero() {
   );
 
   return (
-    <section className="min-h-screen relative overflow-hidden pt-20 pb-12">
+    <section className="min-h-screen relative overflow-hidden pt-16 pb-8 flex items-center">
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       
@@ -64,24 +64,24 @@ function Hero() {
       </div>
         
       <div className="max-w-7xl mx-auto relative z-10 px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between h-full min-h-[80vh] gap-8">
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-120px)] lg:justify-between gap-8">
           <div className="text-center lg:text-left flex-1 max-w-2xl" style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
-            <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-[1.1]">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 leading-[1.05]">
               <span className="block">Building</span>
               <span className="block text-gradient">Digital</span>
               <span className="block">Experiences</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-muted max-w-xl mx-auto lg:mx-0 mb-8 sm:mb-10">
+            <p className="text-lg sm:text-xl md:text-2xl text-muted max-w-xl mx-auto lg:mx-0 mb-10 sm:mb-12 leading-relaxed">
               Specializing in silicone baby stores, pet platforms, tracking systems, e-commerce & custom web solutions. Built for businesses that want results.
             </p>
-            <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 sm:gap-6">
               <Link href="/portfolio">
-                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors text-sm sm:text-base">
-                  View Work <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
+                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 px-8 sm:px-10 py-4 sm:py-5 bg-primary text-background rounded-full font-semibold hover:bg-primary-light transition-colors text-base sm:text-lg">
+                  View Work <ArrowRight className="w-5 sm:w-6 h-5 sm:h-6" />
                 </motion.button>
               </Link>
               <Link href="/contact">
-                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 glass rounded-full font-semibold hover:bg-white/10 transition-colors border border-primary/30 text-sm sm:text-base">
+                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex items-center gap-2 px-8 sm:px-10 py-4 sm:py-5 glass rounded-full font-semibold hover:bg-white/10 transition-colors border border-primary/30 text-base sm:text-lg">
                   Get In Touch
                 </motion.button>
               </Link>
