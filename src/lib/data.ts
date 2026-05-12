@@ -212,8 +212,8 @@ export const services = [
     name: "Silicone Baby & Nursery Websites",
     shortDesc: "Online stores for reborn baby dolls and nursery products",
     description: "Beautiful e-commerce platforms for silicone baby doll stores. Features include product galleries, secure ordering system, and inventory management.",
-    priceRange: "75,000 - 120,000 XAF",
-    priceNote: "Lowest tier: simple design, client pays domain & email. Highest tier: domain & email included",
+    priceRange: "120,000 XAF",
+    priceNote: "Everything included: domain, email, hosting, SEO, and more",
     delivery: "1 day - 1 week",
     features: ["Product galleries", "Order system", "Email notifications", "SEO included", "Mobile responsive"],
     icon: "Baby"
@@ -223,8 +223,8 @@ export const services = [
     name: "Pet Breeder & Rehoming Websites",
     shortDesc: "Platforms for pet breeders and adoption services",
     description: "Professional websites for pet breeders and rehoming services. Includes pet profiles, adoption forms, and contact systems.",
-    priceRange: "90,000 - 150,000 XAF",
-    priceNote: "90k for single breed, 150k for multiple breeds",
+    priceRange: "150,000 XAF",
+    priceNote: "Everything included: domain, email, hosting, SEO, and more",
     delivery: "1 day - 1 week",
     features: ["Pet profiles", "Adoption forms", "Gallery", "Contact system", "SEO included"],
     icon: "Paw"
@@ -234,8 +234,8 @@ export const services = [
     name: "Tracking & Logistics Systems",
     shortDesc: "Real-time package and shipment tracking",
     description: "Custom tracking systems for logistics companies. Real-time updates, admin dashboard, and customer tracking portals.",
-    priceRange: "70,000 - 100,000 XAF",
-    priceNote: "Basic: no live map, no email service. Full: live map, email notifications, admin panel",
+    priceRange: "100,000 XAF",
+    priceNote: "Everything included: domain, email, hosting, SEO, live map, admin panel, and more",
     delivery: "1 day - 1 week",
     features: ["Tracking system", "Admin dashboard", "Email notifications", "SEO included", "Live map"],
     icon: "MapPin"
@@ -245,8 +245,8 @@ export const services = [
     name: "Banking & Financial Platforms",
     shortDesc: "Secure financial and asset management platforms",
     description: "High-security banking platforms with client portals, case tracking, and document handling for asset recovery services.",
-    priceRange: "120,000 - 170,000 XAF",
-    priceNote: "Complex platforms requiring more development time",
+    priceRange: "170,000 XAF",
+    priceNote: "Everything included: domain, email, hosting, SEO, and more",
     delivery: "1 day - 1 week",
     features: ["Client portals", "Secure login", "Case tracking", "Document handling", "SEO included"],
     icon: "DollarSign"
@@ -256,8 +256,8 @@ export const services = [
     name: "Healthcare & Peptide Research Sites",
     shortDesc: "Professional platforms for healthcare and research",
     description: "Platforms for peptide labs, clinics, and healthcare services. Product catalogs, COA verification, and wholesale ordering.",
-    priceRange: "60,000 - 100,000 XAF",
-    priceNote: "Lowest tier: no database population, client provides logo, pays domain & email",
+    priceRange: "100,000 XAF",
+    priceNote: "Everything included: domain, email, hosting, SEO, and more",
     delivery: "1 day - 1 week",
     features: ["Product catalog", "COA verification", "Wholesale ordering", "SEO included", "Mobile responsive"],
     icon: "Heart"
@@ -267,8 +267,8 @@ export const services = [
     name: "Automotive & Car Dealership Sites",
     shortDesc: "Professional car dealership platforms",
     description: "Car dealership platforms with inventory, financing calculators, and map integration for locating dealerships.",
-    priceRange: "150,000 - 200,000 XAF",
-    priceNote: "Lowest: good design, client provides logo, pays domain, basic SEO. Highest: top SEO, 2mo free maintenance, Google Search Console",
+    priceRange: "200,000 XAF",
+    priceNote: "Everything included: domain, email, hosting, SEO, Google Search Console, and more",
     delivery: "1 day - 1 week",
     features: ["Vehicle inventory", "Financing calculator", "Map integration", "Top SEO", "Google Search Console"],
     icon: "Car"
@@ -279,7 +279,7 @@ export const services = [
     shortDesc: "Campaign platforms for Cameroon elections",
     description: "Political campaign websites for Cameroon candidates. Includes MTN and Orange Money payment integration for donations and merchandise.",
     priceRange: "40,000 XAF",
-    priceNote: "MTN and Orange Money payment integration included",
+    priceNote: "Everything included: domain, email, hosting, MTN & Orange Money integration",
     delivery: "1 day - 1 week",
     features: ["MTN Mobile Money", "Orange Money", "Campaign info", "Donation system", "SEO included"],
     icon: "Vote"
@@ -289,8 +289,8 @@ export const services = [
     name: "Construction & Contractor Websites",
     shortDesc: "Professional sites for construction companies",
     description: "Professional websites for construction companies and contractors. Project portfolios, service listings, and contact forms.",
-    priceRange: "75,000 - 100,000 XAF",
-    priceNote: "Tiered pricing based on complexity",
+    priceRange: "100,000 XAF",
+    priceNote: "Everything included: domain, email, hosting, SEO, and more",
     delivery: "1 day - 1 week",
     features: ["Project portfolio", "Service listings", "Contact forms", "SEO included", "Mobile responsive"],
     icon: "Hammer"
@@ -300,8 +300,8 @@ export const services = [
     name: "Personal Portfolio Websites",
     shortDesc: "Professional portfolios for individuals",
     description: "Clean, professional portfolio websites for individuals. Showcase your work, skills, and contact information.",
-    priceRange: "30,000 - 100,000 XAF",
-    priceNote: "30k for basic, 100k for premium with advanced features",
+    priceRange: "100,000 XAF",
+    priceNote: "Everything included: domain, email, hosting, SEO, and more",
     delivery: "1 day - 1 week",
     features: ["Personal branding", "Work showcase", "Contact form", "SEO included", "Responsive design"],
     icon: "User"
@@ -503,16 +503,16 @@ export const paymentTerms = {
 
 export const contactFormFields = {
   projectTypes: [
-    { id: "silicone", name: "Silicone Baby / Nursery Website", priceRange: "75,000 - 120,000 XAF" },
-    { id: "pets", name: "Pet Breeder / Rehoming Website", priceRange: "90,000 - 150,000 XAF" },
-    { id: "tracking", name: "Tracking / Logistics System", priceRange: "70,000 - 100,000 XAF" },
-    { id: "banking", name: "Banking / Financial Platform", priceRange: "120,000 - 170,000 XAF" },
-    { id: "healthcare", name: "Healthcare / Peptide Website", priceRange: "60,000 - 100,000 XAF" },
-    { id: "automotive", name: "Automotive / Car Dealership", priceRange: "150,000 - 200,000 XAF" },
+    { id: "silicone", name: "Silicone Baby / Nursery Website", priceRange: "120,000 XAF" },
+    { id: "pets", name: "Pet Breeder / Rehoming Website", priceRange: "150,000 XAF" },
+    { id: "tracking", name: "Tracking / Logistics System", priceRange: "100,000 XAF" },
+    { id: "banking", name: "Banking / Financial Platform", priceRange: "170,000 XAF" },
+    { id: "healthcare", name: "Healthcare / Peptide Website", priceRange: "100,000 XAF" },
+    { id: "automotive", name: "Automotive / Car Dealership", priceRange: "200,000 XAF" },
     { id: "political", name: "Political Campaign Website", priceRange: "40,000 XAF" },
-    { id: "construction", name: "Construction Website", priceRange: "75,000 - 100,000 XAF" },
-    { id: "portfolio", name: "Portfolio Website", priceRange: "30,000 - 100,000 XAF" },
-    { id: "ecommerce", name: "E-commerce Website", priceRange: "Coming Soon" },
+    { id: "construction", name: "Construction Website", priceRange: "100,000 XAF" },
+    { id: "portfolio", name: "Portfolio Website", priceRange: "100,000 XAF" },
+    { id: "ecommerce", name: "E-commerce Website", priceRange: "Contact for pricing" },
     { id: "other", name: "Other / Not Sure", priceRange: "Let's discuss" }
   ],
   addOns: [

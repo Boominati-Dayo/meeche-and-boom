@@ -12,7 +12,7 @@ const seedProjects = [
     description: "Premium silicone reborn baby doll e-commerce platform with gallery, custom ordering, and secure payments.",
     shortDesc: "Premium silicone reborn baby doll e-commerce platform",
     tags: ["E-commerce", "Gallery", "Custom Orders"],
-    priceRange: "75,000 - 120,000 XAF",
+    priceRange: "120,000 XAF",
     images: [],
     featured: true,
     status: "active",
@@ -27,7 +27,7 @@ const seedProjects = [
     description: "Professional peptide research platform with product catalog, COA verification, and wholesale ordering.",
     shortDesc: "Professional peptide research platform",
     tags: ["E-commerce", "B2B", "Research"],
-    priceRange: "60,000 - 100,000 XAF",
+    priceRange: "100,000 XAF",
     images: [],
     featured: true,
     status: "active",
@@ -42,7 +42,7 @@ const seedProjects = [
     description: "High-security private banking and asset recovery platform with client portals and case tracking.",
     shortDesc: "High-security private banking platform",
     tags: ["Banking", "Security", "Asset Recovery"],
-    priceRange: "120,000 - 170,000 XAF",
+    priceRange: "170,000 XAF",
     images: [],
     featured: true,
     status: "active",
@@ -57,7 +57,7 @@ const seedProjects = [
     description: "Specialized dog rehoming platform with adoption applications and pet profiles.",
     shortDesc: "Specialized dog rehoming platform",
     tags: ["Pet Adoption", "Gallery", "Applications"],
-    priceRange: "90,000 - 150,000 XAF",
+    priceRange: "150,000 XAF",
     images: [],
     featured: true,
     status: "active",
@@ -72,7 +72,7 @@ const seedProjects = [
     description: "Complete logistics and tracking system with real-time package tracking and management dashboard.",
     shortDesc: "Complete logistics and tracking system",
     tags: ["Tracking", "Management", "Dashboard"],
-    priceRange: "70,000 - 100,000 XAF",
+    priceRange: "100,000 XAF",
     images: [],
     featured: true,
     status: "active",
@@ -87,7 +87,7 @@ const seedProjects = [
     description: "Pet rehoming service with detailed pet profiles and adoption process.",
     shortDesc: "Pet rehoming service",
     tags: ["Pet Rehoming", "Profiles", "Contact"],
-    priceRange: "90,000 - 150,000 XAF",
+    priceRange: "150,000 XAF",
     images: [],
     featured: false,
     status: "active",
@@ -102,7 +102,7 @@ const seedProjects = [
     description: "Premium silicone baby nursery store with detailed product catalog.",
     shortDesc: "Premium silicone baby nursery store",
     tags: ["E-commerce", "Nursery", "Silicone"],
-    priceRange: "75,000 - 120,000 XAF",
+    priceRange: "120,000 XAF",
     images: [],
     featured: false,
     status: "active",
@@ -117,26 +117,11 @@ const seedProjects = [
     description: "Car dealership platform with inventory, financing, and map integration.",
     shortDesc: "Car dealership platform",
     tags: ["Automotive", "Inventory", "Financing"],
-    priceRange: "150,000 - 200,000 XAF",
+    priceRange: "200,000 XAF",
     images: [],
     featured: false,
     status: "active",
     order: 8
-  },
-  {
-    title: "PetXpress Tracking",
-    slug: "petxpress-tracking",
-    client: "PetXpress",
-    category: "tracking",
-    visitUrl: "https://petxpress-tracking.vercel.app/",
-    description: "Specialized pet transport tracking system.",
-    shortDesc: "Specialized pet transport tracking",
-    tags: ["Tracking", "Pets", "Transport"],
-    priceRange: "70,000 - 100,000 XAF",
-    images: [],
-    featured: false,
-    status: "active",
-    order: 9
   },
   {
     title: "Global Track Courier",
@@ -147,11 +132,11 @@ const seedProjects = [
     description: "International courier tracking platform.",
     shortDesc: "International courier tracking",
     tags: ["Tracking", "International", "Courier"],
-    priceRange: "70,000 - 100,000 XAF",
+    priceRange: "100,000 XAF",
     images: [],
     featured: false,
     status: "active",
-    order: 10
+    order: 9
   },
   {
     title: "Tesla Capital",
@@ -162,11 +147,11 @@ const seedProjects = [
     description: "Investment and capital management platform.",
     shortDesc: "Investment and capital management",
     tags: ["Banking", "Investment", "Capital"],
-    priceRange: "120,000 - 170,000 XAF",
+    priceRange: "170,000 XAF",
     images: [],
     featured: false,
     status: "active",
-    order: 11
+    order: 10
   },
   {
     title: "EazyPost LLC",
@@ -177,11 +162,11 @@ const seedProjects = [
     description: "Local delivery and logistics service.",
     shortDesc: "Local delivery and logistics",
     tags: ["Delivery", "Local", "Logistics"],
-    priceRange: "70,000 - 100,000 XAF",
+    priceRange: "100,000 XAF",
     images: [],
     featured: false,
     status: "active",
-    order: 12
+    order: 11
   },
   {
     title: "Puppy Planet",
@@ -192,11 +177,11 @@ const seedProjects = [
     description: "Puppy sales and breeder platform with puppy profiles.",
     shortDesc: "Puppy sales and breeder platform",
     tags: ["Puppies", "Breeder", "Profiles"],
-    priceRange: "90,000 - 150,000 XAF",
+    priceRange: "150,000 XAF",
     images: [],
     featured: false,
     status: "active",
-    order: 13
+    order: 12
   },
   {
     title: "Morgan Doxie Kernel",
@@ -207,11 +192,11 @@ const seedProjects = [
     description: "Specialized dog breeder and rehoming service.",
     shortDesc: "Specialized dog breeder service",
     tags: ["Dog Breeder", "Rehoming", "Doxie"],
-    priceRange: "90,000 - 150,000 XAF",
+    priceRange: "150,000 XAF",
     images: [],
     featured: false,
     status: "active",
-    order: 14
+    order: 13
   },
   {
     title: "Rothschild Foundation",
@@ -222,11 +207,11 @@ const seedProjects = [
     description: "Foundation and charity organization website.",
     shortDesc: "Foundation and charity website",
     tags: ["Foundation", "Charity", "Business"],
-    priceRange: "75,000 - 100,000 XAF",
+    priceRange: "100,000 XAF",
     images: [],
     featured: false,
     status: "active",
-    order: 15
+    order: 14
   },
   {
     title: "Calmica Casa",
@@ -237,11 +222,11 @@ const seedProjects = [
     description: "Real estate and property management platform.",
     shortDesc: "Real estate and property management",
     tags: ["Real Estate", "Property", "Business"],
-    priceRange: "75,000 - 100,000 XAF",
+    priceRange: "100,000 XAF",
     images: [],
     featured: false,
     status: "active",
-    order: 16
+    order: 15
   },
   {
     title: "Vote Mr Jean Baptiste",
@@ -256,7 +241,7 @@ const seedProjects = [
     images: [],
     featured: false,
     status: "active",
-    order: 17
+    order: 16
   },
   {
     title: "Navista",
@@ -267,11 +252,11 @@ const seedProjects = [
     description: "Navigation and tracking system with advanced features.",
     shortDesc: "Navigation and tracking system",
     tags: ["Navigation", "Tracking", "System"],
-    priceRange: "70,000 - 100,000 XAF",
+    priceRange: "100,000 XAF",
     images: [],
     featured: false,
     status: "active",
-    order: 18
+    order: 17
   }
 ];
 

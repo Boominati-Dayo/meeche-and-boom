@@ -178,19 +178,19 @@ export const faqs = [
   },
   {
     question: "Is hosting included?",
-    answer: "For basic/lowest-tier packages, hosting is 8,500 XAF/year (separate). For top-tier packages, hosting is included in the price."
+    answer: "Yes! All our packages include 1 year of free hosting. Domain and email are also included."
   },
   {
     question: "Do I need to provide my own logo?",
-    answer: "For lowest-tier packages, you may need to provide your own logo. For higher-tier packages, we create logos as part of the package."
+    answer: "No! We create your logo as part of the package. Everything is included."
   },
   {
     question: "Do you include SEO?",
-    answer: "Yes! All our websites come with SEO optimization. Top-tier packages include monthly SEO maintenance."
+    answer: "Yes! All our websites come with SEO optimization included."
   },
   {
     question: "Do you offer maintenance after launch?",
-    answer: "Yes. Top-tier packages include 1-2 months of free maintenance. After that, maintenance is charged based on the amount of work required."
+    answer: "Yes. All packages include 1 month of free maintenance after launch."
   },
   {
     question: "Do you integrate payment methods?",
@@ -218,16 +218,16 @@ export const paymentTerms = {
 
 export const contactFormFields = {
   projectTypes: [
-    { id: "silicone", name: "Silicone Baby / Nursery Website", priceRange: "75,000 - 120,000 XAF" },
-    { id: "pets", name: "Pet Breeder / Rehoming Website", priceRange: "90,000 - 150,000 XAF" },
-    { id: "tracking", name: "Tracking / Logistics System", priceRange: "70,000 - 100,000 XAF" },
-    { id: "banking", name: "Banking / Financial Platform", priceRange: "120,000 - 170,000 XAF" },
-    { id: "healthcare", name: "Healthcare / Peptide Website", priceRange: "60,000 - 100,000 XAF" },
-    { id: "automotive", name: "Automotive / Car Dealership", priceRange: "150,000 - 200,000 XAF" },
+    { id: "silicone", name: "Silicone Baby / Nursery Website", priceRange: "120,000 XAF" },
+    { id: "pets", name: "Pet Breeder / Rehoming Website", priceRange: "150,000 XAF" },
+    { id: "tracking", name: "Tracking / Logistics System", priceRange: "100,000 XAF" },
+    { id: "banking", name: "Banking / Financial Platform", priceRange: "170,000 XAF" },
+    { id: "healthcare", name: "Healthcare / Peptide Website", priceRange: "100,000 XAF" },
+    { id: "automotive", name: "Automotive / Car Dealership", priceRange: "200,000 XAF" },
     { id: "political", name: "Political Campaign Website", priceRange: "40,000 XAF" },
-    { id: "construction", name: "Construction Website", priceRange: "75,000 - 100,000 XAF" },
-    { id: "portfolio", name: "Portfolio Website", priceRange: "30,000 - 100,000 XAF" },
-    { id: "ecommerce", name: "E-commerce Website", priceRange: "Coming Soon" },
+    { id: "construction", name: "Construction Website", priceRange: "100,000 XAF" },
+    { id: "portfolio", name: "Portfolio Website", priceRange: "100,000 XAF" },
+    { id: "ecommerce", name: "E-commerce Website", priceRange: "Contact for pricing" },
     { id: "other", name: "Other / Not Sure", priceRange: "Let's discuss" }
   ],
   addOns: [
