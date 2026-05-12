@@ -65,7 +65,7 @@ function Hero() {
         
       <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center lg:items-start justify-center min-h-[85vh] lg:min-h-[80vh] gap-8">
-          <div className="text-center lg:text-left flex-1 max-w-3xl lg:max-w-2xl w-full">
+          <div className="text-left flex-1 max-w-3xl lg:max-w-2xl w-full">
             <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-8 sm:mb-10 leading-[1.02]">
               <span className="block">Building</span>
               <span className="block text-gradient">Digital</span>
