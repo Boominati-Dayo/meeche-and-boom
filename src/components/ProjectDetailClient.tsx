@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft, Sparkles, ArrowRight, ExternalLink, ChevronRight, ChevronLeft } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -26,33 +26,22 @@ interface Project {
 export default function ProjectDetailClient({ project }: { project: Project }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const allImages = project.images && project.images.length > 0 ? project.images : [];
 
   useEffect(() => {
     if (allImages.length <= 1 || isPaused) return;
     
-    timeoutRef.current = setTimeout(() => {
+    const timer = setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % allImages.length);
     }, 4000);
     
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
+    return () => clearTimeout(timer);
   }, [currentSlide, isPaused, allImages.length]);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % allImages.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + allImages.length) % allImages.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % allImages.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + allImages.length) % allImages.length);
+  const goToSlide = (index: number) => setCurrentSlide(index);
 
   const relatedServices = services.filter(s => 
     (project.category === 'silicone' && s.id === 'silicone') ||
