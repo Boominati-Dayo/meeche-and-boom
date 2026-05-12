@@ -211,7 +211,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="font-medium">Email</p>
-                      <p className="text-muted">hello@meecheandboom.com</p>
+                      <p className="text-muted">meecheandboom@gmail.com</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">

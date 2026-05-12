@@ -92,7 +92,7 @@ export default function PrivacyPage() {
             <p>
               If you have any questions about this Privacy Policy, please contact us at:
             </p>
-            <p className="font-medium text-foreground">hello@meecheandboom.com</p>
+            <p className="font-medium text-foreground">meecheandboom@gmail.com</p>
 
             <h2 className="text-2xl font-bold text-foreground mt-8">8. Changes to This Policy</h2>
             <p>

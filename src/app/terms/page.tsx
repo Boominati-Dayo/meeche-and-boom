@@ -107,7 +107,7 @@ export default function TermsPage() {
 
             <h2 className="text-2xl font-bold text-foreground mt-8">10. Contact</h2>
             <p>For questions about these Terms of Service, please contact us:</p>
-            <p className="font-medium text-foreground">hello@meecheandboom.com</p>
+            <p className="font-medium text-foreground">meecheandboom@gmail.com</p>
           </motion.div>
         </div>
       </div>

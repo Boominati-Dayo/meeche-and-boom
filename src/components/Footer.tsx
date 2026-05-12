@@ -28,7 +28,7 @@ const socialLinks = [
   { icon: Globe, href: "#", label: "Website" },
   { icon: Star, href: "#", label: "Rating" },
   { icon: Send, href: "#", label: "Message" },
-  { icon: Mail, href: "mailto:hello@meecheandboom.com", label: "Email" },
+  { icon: Mail, href: "mailto:meecheandboom@gmail.com", label: "Email" },
 ];
 
 export function Footer() {
@@ -89,7 +89,7 @@ export function Footer() {
             <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-muted">
               <li className="flex items-center gap-1.5 sm:gap-2">
                 <Mail className="w-3 sm:w-4 h-3 sm:h-4 text-primary flex-shrink-0" />
-                <span className="truncate">hello@meecheandboom.com</span>
+                <span className="truncate">meecheandboom@gmail.com</span>
               </li>
               <li className="flex items-center gap-1.5 sm:gap-2">
                 <Phone className="w-3 sm:w-4 h-3 sm:h-4 text-primary flex-shrink-0" />
