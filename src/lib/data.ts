@@ -14,7 +14,7 @@ export const projects = [
     url: "https://joanas-reborn-babies.vercel.app/",
     description: "Premium silicone reborn baby doll e-commerce platform with gallery, custom ordering, and secure payments.",
     tags: ["E-commerce", "Gallery", "Custom Orders"],
-    price: "75,000 - 120,000 XAF",
+    price: "120,000 XAF",
     image: "/projects/reborn.jpg"
   },
   {
@@ -25,7 +25,7 @@ export const projects = [
     url: "https://peptide-lab-six.vercel.app/",
     description: "Professional peptide research platform with product catalog, COA verification, and wholesale ordering.",
     tags: ["E-commerce", "B2B", "Research"],
-    price: "60,000 - 100,000 XAF",
+    price: "100,000 XAF",
     image: "/projects/peptides.jpg"
   },
   {
@@ -36,7 +36,7 @@ export const projects = [
     url: "https://recoverlytrustbank.com/",
     description: "High-security private banking and asset recovery platform with client portals and case tracking.",
     tags: ["Banking", "Security", "Asset Recovery"],
-    price: "120,000 - 170,000 XAF",
+    price: "170,000 XAF",
     image: "/projects/banking.jpg"
   },
   {
@@ -47,7 +47,7 @@ export const projects = [
     url: "https://cavalierkingcharlesrehomingcenter.com/",
     description: "Specialized dog rehoming platform with adoption applications and pet profiles.",
     tags: ["Pet Adoption", "Gallery", "Applications"],
-    price: "90,000 - 150,000 XAF",
+    price: "150,000 XAF",
     image: "/projects/pets.jpg"
   },
   {
@@ -58,7 +58,7 @@ export const projects = [
     url: "https://zip-xpresslogistics.com/",
     description: "Complete logistics and tracking system with real-time package tracking and management dashboard.",
     tags: ["Tracking", "Management", "Dashboard"],
-    price: "70,000 - 100,000 XAF",
+    price: "100,000 XAF",
     image: "/projects/logistics.jpg"
   },
   {
@@ -69,7 +69,7 @@ export const projects = [
     url: "https://tiffany-dawson-rehoming.vercel.app/",
     description: "Pet rehoming service with detailed pet profiles and adoption process.",
     tags: ["Pet Rehoming", "Profiles", "Contact"],
-    price: "90,000 - 150,000 XAF",
+    price: "150,000 XAF",
     image: "/projects/pets2.jpg"
   },
   {
@@ -80,7 +80,7 @@ export const projects = [
     url: "https://dolores-silicone.vercel.app/",
     description: "Premium silicone baby nursery store with detailed product catalog.",
     tags: ["E-commerce", "Nursery", "Silicone"],
-    price: "75,000 - 120,000 XAF",
+    price: "120,000 XAF",
     image: "/projects/silicone2.jpg"
   },
   {
@@ -91,7 +91,7 @@ export const projects = [
     url: "https://lithia-auto.vercel.app/",
     description: "Car dealership platform with inventory, financing, and map integration.",
     tags: ["Automotive", "Inventory", "Financing"],
-    price: "150,000 - 200,000 XAF",
+    price: "200,000 XAF",
     image: "/projects/auto.jpg"
   },
   {
@@ -102,7 +102,7 @@ export const projects = [
     url: "https://petxpress-tracking.vercel.app/",
     description: "Specialized pet transport tracking system.",
     tags: ["Tracking", "Pets", "Transport"],
-    price: "70,000 - 100,000 XAF",
+    price: "100,000 XAF",
     image: "/projects/pettrack.jpg"
   },
   {
@@ -113,7 +113,7 @@ export const projects = [
     url: "https://global-track-courier.vercel.app/",
     description: "International courier tracking platform.",
     tags: ["Tracking", "International", "Courier"],
-    price: "70,000 - 100,000 XAF",
+    price: "100,000 XAF",
     image: "/projects/courier.jpg"
   },
   {
@@ -124,7 +124,7 @@ export const projects = [
     url: "https://tesla-capital.vercel.app/",
     description: "Investment and capital management platform.",
     tags: ["Banking", "Investment", "Capital"],
-    price: "120,000 - 170,000 XAF",
+    price: "170,000 XAF",
     image: "/projects/tesla.jpg"
   },
   {
@@ -135,7 +135,7 @@ export const projects = [
     url: "https://eazypost-llc.vercel.app/",
     description: "Local delivery and logistics service.",
     tags: ["Delivery", "Local", "Logistics"],
-    price: "70,000 - 100,000 XAF",
+    price: "100,000 XAF",
     image: "/projects/post.jpg"
   },
   {
@@ -146,7 +146,7 @@ export const projects = [
     url: "https://puppyplanet.vercel.app/",
     description: "Puppy sales and breeder platform with puppy profiles.",
     tags: ["Puppies", "Breeder", "Profiles"],
-    price: "90,000 - 150,000 XAF",
+    price: "150,000 XAF",
     image: "/projects/puppy.jpg"
   },
   {
@@ -157,7 +157,7 @@ export const projects = [
     url: "https://morgan-doxie-kernel.vercel.app/",
     description: "Specialized dog breeder and rehoming service.",
     tags: ["Dog Breeder", "Rehoming", "Doxie"],
-    price: "90,000 - 150,000 XAF",
+    price: "150,000 XAF",
     image: "/projects/doxie.jpg"
   },
   {
@@ -168,7 +168,7 @@ export const projects = [
     url: "https://rothschild-foundation.vercel.app/",
     description: "Foundation and charity organization website.",
     tags: ["Foundation", "Charity", "Business"],
-    price: "75,000 - 100,000 XAF",
+    price: "100,000 XAF",
     image: "/projects/foundation.jpg"
   },
   {
@@ -179,7 +179,7 @@ export const projects = [
     url: "https://calmicasa.vercel.app/",
     description: "Real estate and property management platform.",
     tags: ["Real Estate", "Property", "Business"],
-    price: "75,000 - 100,000 XAF",
+    price: "100,000 XAF",
     image: "/projects/realestate.jpg"
   },
   {
@@ -201,7 +201,7 @@ export const projects = [
     url: "https://navista.vercel.app/",
     description: "Navigation and tracking system with advanced features.",
     tags: ["Navigation", "Tracking", "System"],
-    price: "70,000 - 100,000 XAF",
+    price: "100,000 XAF",
     image: "/projects/navista.jpg"
   }
 ];

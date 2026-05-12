@@ -3,6 +3,8 @@ import { connectDB } from "@/lib/mongodb";
 import { Contact } from "@/models/Contact";
 import nodemailer from "nodemailer";
 
+const ADMIN_EMAIL = "meechandboom@gmail.com";
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT || "587"),
@@ -30,7 +32,7 @@ export async function PUT(
     // Send reply email if provided
     if (body.replyMessage && body.sendEmail) {
       await transporter.sendMail({
-        from: `"Meeche & Boom Co." <${process.env.SMTP_USER}>`,
+        from: `"Meeche & Boom Co." <${ADMIN_EMAIL}>`,
         to: contact.email,
         subject: `Re: Your inquiry - Meeche & Boom Co.`,
         html: `

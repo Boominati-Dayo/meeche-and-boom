@@ -3,6 +3,8 @@ import nodemailer from "nodemailer";
 import { connectDB } from "@/lib/mongodb";
 import { Contact } from "@/models/Contact";
 
+const ADMIN_EMAIL = "meechandboom@gmail.com";
+
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT || "587"),
@@ -39,8 +41,8 @@ export async function POST(request: Request) {
 
     // Send email notification
     const mailOptions = {
-      from: `"Meeche & Boom Co." <${process.env.SMTP_USER}>`,
-      to: process.env.SMTP_USER,
+      from: `"Meeche & Boom Co." <${ADMIN_EMAIL}>`,
+      to: ADMIN_EMAIL,
       replyTo: email,
       subject: `New Contact Form Submission - ${name}`,
       html: `
