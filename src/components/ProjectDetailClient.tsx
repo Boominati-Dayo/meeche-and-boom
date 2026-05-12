@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowLeft, Sparkles, ArrowRight, ExternalLink, Check, Clock, ChevronRight, Loader2 } from "lucide-react";
-import { motion, useInView } from "framer-motion";
+import { ArrowLeft, Sparkles, ArrowRight, ExternalLink, ChevronRight, ChevronLeft } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { services } from "@/lib/data";
@@ -25,7 +24,35 @@ interface Project {
 }
 
 export default function ProjectDetailClient({ project }: { project: Project }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const allImages = project.images && project.images.length > 0 ? project.images : [];
+
+  useEffect(() => {
+    if (allImages.length <= 1 || isPaused) return;
+    
+    timeoutRef.current = setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % allImages.length);
+    }, 4000);
+    
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [currentSlide, isPaused, allImages.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % allImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
 
   const relatedServices = services.filter(s => 
     (project.category === 'silicone' && s.id === 'silicone') ||
@@ -50,29 +77,59 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             <div>
-              <div className="aspect-video bg-gradient-to-br from-secondary to-accent rounded-2xl flex items-center justify-center mb-6 overflow-hidden">
-                {project.images && project.images[0] ? (
-                  <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" loading="lazy" />
-                ) : (
-                  <Sparkles className="w-20 h-20 text-primary/30" />
-                )}
-              </div>
-              
-              {project.images && project.images.length > 1 && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold mb-3">Project Gallery</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                    {project.images.slice(1).map((img, idx) => (
-                      <div key={idx} className="aspect-video rounded-lg overflow-hidden bg-secondary/30">
-                        <img src={img} alt={`${project.title} screenshot ${idx + 2}`} className="w-full h-full object-cover" loading="lazy" />
+              {allImages.length > 0 ? (
+                <div 
+                  className="relative aspect-video rounded-2xl overflow-hidden bg-secondary/30"
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                >
+                  <img 
+                    src={allImages[currentSlide]} 
+                    alt={`${project.title} - Image ${currentSlide + 1}`} 
+                    className="w-full h-full object-cover"
+                  />
+                  
+                  {allImages.length > 1 && (
+                    <>
+                      <button 
+                        onClick={prevSlide}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-colors"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      <button 
+                        onClick={nextSlide}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-colors"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                      
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                        {allImages.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => goToSlide(idx)}
+                            className={`w-2 h-2 rounded-full transition-all ${
+                              idx === currentSlide ? 'bg-primary w-6' : 'bg-background/50 hover:bg-background/80'
+                            }`}
+                          />
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                      
+                      <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-background/80 backdrop-blur-sm text-sm font-medium">
+                        {currentSlide + 1} / {allImages.length}
+                      </div>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div className="aspect-video bg-gradient-to-br from-secondary to-accent rounded-2xl flex items-center justify-center">
+                  <Sparkles className="w-20 h-20 text-primary/30" />
                 </div>
               )}
               
               {project.visitUrl && project.showUrl !== false && (
-                <a href={project.visitUrl} target="_blank" className="inline-flex items-center gap-2 text-primary hover:underline">
+                <a href={project.visitUrl} target="_blank" className="inline-flex items-center gap-2 text-primary hover:underline mt-6">
                   Visit Website <ExternalLink className="w-4 h-4" />
                 </a>
               )}
