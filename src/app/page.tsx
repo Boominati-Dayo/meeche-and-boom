@@ -229,8 +229,12 @@ function FeaturedWork() {
                 transition={{ delay: idx * 0.1 }}
               >
                 <Link href={`/portfolio/${project._id}`} className="block group glass rounded-xl overflow-hidden hover:border-primary/50 transition-all">
-                  <div className="h-32 bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
-                    <Sparkles className="w-10 h-10 text-primary/30 group-hover:text-primary/60 transition-colors" />
+                  <div className="h-32 bg-gradient-to-br from-secondary to-accent flex items-center justify-center overflow-hidden">
+                    {project.images && project.images[0] ? (
+                      <img src={project.images[0]} alt={project.title} className="w-full h-full object-cover" style={{ width: '100%', height: '100%' }} />
+                    ) : (
+                      <Sparkles className="w-10 h-10 text-primary/30 group-hover:text-primary/60 transition-colors" />
+                    )}
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">{project.title}</h3>

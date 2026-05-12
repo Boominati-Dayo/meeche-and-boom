@@ -7,7 +7,6 @@ export const dynamic = "force-dynamic";
 export default async function PortfolioPage() {
   await connectDB();
   const projects = await Project.find({ status: "active" }).sort({ order: 1 }).lean();
-  
   const projectsData = projects.map(p => ({
     _id: p._id.toString(),
     title: p.title,
