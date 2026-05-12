@@ -3,7 +3,7 @@ import { connectDB } from "@/lib/mongodb";
 import { Contact } from "@/models/Contact";
 import nodemailer from "nodemailer";
 
-const ADMIN_EMAIL = "meechandboom@gmail.com";
+const ADMIN_EMAIL = "meecheandboom@gmail.com";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
