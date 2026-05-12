@@ -28,7 +28,7 @@ export default function AdminLogin() {
     setError("");
     setSuccess(false);
 
-    const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || process.env.ADMIN_EMAIL || "admin@boominati.com";
+    const adminEmail = process.env.ADMIN_EMAIL || "admin@boominati.com";
     const adminPassword = process.env.ADMIN_PASSWORD || "password";
 
     await new Promise(resolve => setTimeout(resolve, 500));
