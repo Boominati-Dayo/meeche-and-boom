@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/mongodb";
 import { Project } from "@/models/Project";
 import ProjectDetailClient from "@/components/ProjectDetailClient";
 import { notFound } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -11,6 +11,41 @@ export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  await connectDB();
+  const project = await Project.findById(id).lean();
+
+  if (!project) {
+    return { title: "Project Not Found" };
+  }
+
+  const ogImage = project.images?.[0] || "";
+
+  return {
+    title: `${project.title} | Meeche & Boom Co.`,
+    description: project.shortDesc || project.description,
+    keywords: project.tags || [],
+    authors: [{ name: "Meeche & Boom Co." }],
+    openGraph: {
+      title: project.title,
+      description: project.shortDesc || project.description,
+      type: "website",
+      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: project.title }] : [],
+      siteName: "Meeche & Boom Co.",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.shortDesc || project.description,
+      images: ogImage ? [ogImage] : [],
+    },
+    alternates: {
+      canonical: `https://meeche-and-boom.vercel.app/portfolio/${id}`,
+    },
+  };
 }
 
 export default async function PortfolioDetailPage({ params }: PageProps) {
