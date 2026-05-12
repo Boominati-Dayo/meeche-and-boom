@@ -28,7 +28,7 @@ export default function AdminLogin() {
     setError("");
     setSuccess(false);
 
-    const adminEmail = "admin@boominati.com";
+    const adminEmail = "meecheandboom@gmail.com";
     const adminPassword = "BOOMINATI100$";
 
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -86,7 +86,7 @@ export default function AdminLogin() {
               required
               disabled={loading || success}
               className="w-full px-4 py-3 glass rounded-xl focus:outline-none focus:border-primary"
-              placeholder="admin@boominati.com"
+              placeholder="meecheandboom@gmail.com"
             />
           </div>
           <div className="space-y-2">
