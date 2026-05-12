@@ -64,7 +64,7 @@ function Hero() {
       </div>
         
       <div className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center lg:justify-between justify-center min-h-[85vh] lg:min-h-[80vh] gap-8">
+        <div className="flex flex-col items-center justify-center lg:flex-row lg:justify-between lg:items-center min-h-[85vh] lg:min-h-[80vh] gap-8">
           <div className="text-center lg:text-left flex-1 max-w-2xl">
             <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-7xl xl:text-8xl font-bold mb-8 sm:mb-10 leading-[1.02] lg:leading-[1.05]">
               <span className="block">Building</span>
