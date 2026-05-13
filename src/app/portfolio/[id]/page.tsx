@@ -22,7 +22,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Project Not Found" };
   }
 
-  const ogImage = project.images?.[0] || "";
+  const ogImage = project.images?.[0] || "/meeche_og.png";
+  const baseUrl = "https://meeche-and-boom.vercel.app";
 
   return {
     title: `${project.title} | Meeche & Boom Co.`,
@@ -32,18 +33,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: project.title,
       description: project.shortDesc || project.description,
-      type: "website",
-      images: ogImage ? [{ url: ogImage, width: 1200, height: 630, alt: project.title }] : [],
+      url: `${baseUrl}/portfolio/${id}`,
       siteName: "Meeche & Boom Co.",
+      type: "website",
+      images: [{ url: ogImage, width: 1200, height: 630, alt: project.title }],
     },
     twitter: {
       card: "summary_large_image",
-      title: project.title,
+      title: `${project.title} | Meeche & Boom Co.`,
       description: project.shortDesc || project.description,
-      images: ogImage ? [ogImage] : [],
+      images: [ogImage],
     },
     alternates: {
-      canonical: `https://meeche-and-boom.vercel.app/portfolio/${id}`,
+      canonical: `${baseUrl}/portfolio/${id}`,
     },
   };
 }

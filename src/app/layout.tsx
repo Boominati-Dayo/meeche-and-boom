@@ -17,7 +17,11 @@ const keaniaOne = Keania_One({
 });
 
 export const metadata: Metadata = {
-  title: "Meeche & Boom Co. | Digital Solutions - Marketing + Web Development",
+  metadataBase: new URL("https://meeche-and-boom.vercel.app"),
+  title: {
+    default: "Meeche & Boom Co. | Digital Solutions - Marketing + Web Development",
+    template: "%s | Meeche & Boom Co.",
+  },
   description: "We get clients, then build their sites. Expert digital solutions combining marketing and web development.",
   keywords: ["web development", "digital agency", "marketing", "silicone baby websites", "pet websites", "e-commerce", "SEO", "Cameroon"],
   authors: [{ name: "Meeche & Boom Co." }],
@@ -32,10 +36,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://res.cloudinary.com/dmwqqfeyq/image/upload/v1747052000/og-default.png",
+        url: "/meeche_og.png",
         width: 1200,
         height: 630,
-        alt: "Meeche & Boom Co.",
+        alt: "Meeche & Boom Co. - Digital Solutions",
       },
     ],
   },
@@ -45,7 +49,7 @@ export const metadata: Metadata = {
     description: "We get clients, then build their sites. Expert digital solutions combining marketing and web development.",
     site: "@meecheandboom",
     creator: "@meecheandboom",
-    images: ["https://res.cloudinary.com/dmwqqfeyq/image/upload/v1747052000/og-default.png"],
+    images: ["/meeche_og.png"],
   },
   robots: {
     index: true,

@@ -13,13 +13,14 @@ export const metadata: Metadata = {
     title: "Portfolio | Meeche & Boom Co.",
     description: "View our portfolio of websites for silicone babies, pet services, healthcare, logistics, and more.",
     type: "website",
-    images: ["https://res.cloudinary.com/dmwqqfeyq/image/upload/v1747052000/og-default.png"],
+    images: [{ url: "/meeche_og.png", width: 1200, height: 630, alt: "Portfolio | Meeche & Boom Co." }],
     siteName: "Meeche & Boom Co.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Portfolio | Meeche & Boom Co.",
     description: "View our portfolio of websites for silicone babies, pet services, healthcare, logistics, and more.",
+    images: ["/meeche_og.png"],
   },
 };
 
