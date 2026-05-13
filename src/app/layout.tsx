@@ -72,6 +72,11 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-title" content="Meeche & Boom Co." />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `var _smartsupp = _smartsupp || {}; _smartsupp.key = '80e9af37cf6f564180e7ea222792aca9fe534a72'; window.smartsupp||(function(d) { var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[]; s=d.getElementsByTagName('script')[0];c=d.createElement('script'); c.type='text/javascript';c.charset='utf-8';c.async=true; c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s); })(document);`
+          }}
+        />
       </head>
       <body className={`${montserrat.variable} ${keaniaOne.variable} min-h-screen bg-background text-foreground antialiased transition-colors duration-300`}>
         <ThemeProvider>
